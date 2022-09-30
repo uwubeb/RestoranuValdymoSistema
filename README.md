@@ -28,5 +28,5 @@ Prisiregistravęs, kompanijos vadovas, galės:
   3.2 Valdyti restorano darbuotojus
 4. Valdyti užsakymus:
   4.1 Peržiūrėti, keisti užsakymus
-  4.2 Palikti pastabas
+  4.2 *Palikti pastabas*
 5. Matyti frančižės veiklos apibendrinimą
