@@ -24,9 +24,9 @@ Prisiregistravęs, kompanijos vadovas, galės:
 1. Pridėti naują restoraną
 2. Redaguoti restoranų duomenis
 3. Valdyti personalą
-  a. Priskirti restoranui vadovą
-  b. Valdyti restorano darbuotojus
+  3.1 Priskirti restoranui vadovą
+  3.2 Valdyti restorano darbuotojus
 4. Valdyti užsakymus:
-  a. Peržiūrėti, keisti užsakymus
-  b. Palikti pastabas
+  4.1 Peržiūrėti, keisti užsakymus
+  4.2 Palikti pastabas
 5. Matyti frančižės veiklos apibendrinimą
