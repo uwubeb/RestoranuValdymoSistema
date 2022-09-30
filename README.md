@@ -1,15 +1,15 @@
 # RestoranuValdymoSistema
-#Sprendžiamo uždavinio aprašymas
+# Sprendžiamo uždavinio aprašymas
 
-##Sistemos paskirtis
+## Sistemos paskirtis
 Projekto tikslas yra padėti restoranų frančižės vadovui bei jo pavaldiniams valdyti restoranus, t.y. valdyti darbuotojus,
 užsakymus, kt.
 
-##Veikimo principas
+## Veikimo principas
 Sistema susideda iš dviejų dalių: grafinė internetinė sąsąja skirta restoranų frančižės savininkui, individualių restoranų
 vadovams, bei aplikacijų programavimo sąsaja (angl. trump. API)
 
-##Funkciniai reikalavimai:
+## Funkciniai reikalavimai:
 
 Neregistruotas sistemos vartotojas galės:
 1. Peržiūrėti platformos reprezentacinį puslapį
