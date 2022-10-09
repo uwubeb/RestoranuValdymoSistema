@@ -11,6 +11,7 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("59d1a209-dd88-4bba-901a-52f069aeb5cd")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("RestoranuValdymoSistema")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]

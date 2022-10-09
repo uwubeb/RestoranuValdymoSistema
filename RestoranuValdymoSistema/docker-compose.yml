@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  restoranuvaldymosistema:
+    image: ${DOCKER_REGISTRY-}restoranuvaldymosistema
+    build:
+      context: .
+      dockerfile: RestoranuValdymoSistema/Dockerfile
+    depends_on:
+        - postgres
+  postgres: 
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: rvs
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+volumes:
+  postgres:
