@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "j+88l4U27g/KN2mDMVwyjYP3Xqz1iNuTtL1Cl2ALyLuWK160dfQ0cpTVaox0CsObdqwPD+oOay3UpEYiGzcFtA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Arunas\\OneDrive - Thruster\\Documents\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Arunas\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\Arunas\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\Arunas\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "C:\\Users\\Arunas\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "C:\\Users\\Arunas\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "C:\\Users\\Arunas\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}
