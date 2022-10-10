@@ -54,16 +54,19 @@ public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : Base
         entity.CreationDate = DateTime.UtcNow;
 
         await DbContext.Set<TEntity>().AddAsync(entity);
+        await DbContext.SaveChangesAsync();
     }
 
-    public void Update(TEntity entity)
+    public async Task Update(TEntity entity)
     {
         DbContext.Set<TEntity>().Update(entity);
+        await DbContext.SaveChangesAsync();
     }
 
-    public void Delete(TEntity entity)
+    public async Task Delete(TEntity entity)
     {
         DbContext.Set<TEntity>().Remove(entity);
+        await DbContext.SaveChangesAsync();
     }
 
     public async Task<List<TEntity>> GetMany(List<Guid> ids)
@@ -82,16 +85,20 @@ public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : Base
     public async Task CreateMany(List<TEntity> entities)
     {
         await DbContext.Set<TEntity>().AddRangeAsync(entities);
+        await DbContext.SaveChangesAsync();
     }
 
-    public void UpdateMany(List<TEntity> entities)
+    public async Task UpdateMany(List<TEntity> entities)
     {
         DbContext.Set<TEntity>().UpdateRange(entities);
+        await DbContext.SaveChangesAsync();
     }
 
-    public void DeleteMany(List<TEntity> entities)
+    public async Task DeleteMany(List<TEntity> entities)
     {
         DbContext.Set<TEntity>().RemoveRange(entities);
+        await DbContext.SaveChangesAsync();
+
     }
 
     public async Task<int> Count(Expression<Func<TEntity, bool>>? expression = null)

@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RestoranuValdymoSistema.Data;
@@ -26,6 +28,10 @@ builder.Services
     .GetService<ApplicationDbContext>()?
     .Database.Migrate();
 
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 
 
 var app = builder.Build();
@@ -38,52 +44,72 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.MapGet("/", () => "Hello World!");
 
-app.MapGet("/restaurants", async (ApplicationDbContext db) =>
-    await db.Restaurants.ToListAsync());
+app.MapGet("/restaurants", async (IRepository<Restaurant> repo) =>
+    await repo.GetAll());
 
-app.MapGet("/restaurants/{id}", async (Guid id, ApplicationDbContext db) =>
-    await db.Restaurants.FindAsync(id)
-        is Restaurant restaurant
+app.MapGet("/restaurants/{id}", async (Guid id, IRepository<Restaurant> repo) =>
+    await repo.GetById(id)
+        is { } restaurant
         ? Results.Ok(restaurant)
         : Results.NotFound());
 
-app.MapPost("/restaurants", async (Restaurant restaurant, ApplicationDbContext db) =>
+app.MapPost("/restaurants", async (Restaurant restaurant, IRepository<Restaurant> repo) =>
 {
-    db.Restaurants.Add(restaurant);
-    await db.SaveChangesAsync();
+    await repo.Create(restaurant);
 
     return Results.Created($"/restaurants/{restaurant.Id}", restaurant);
 });
 
-app.MapPut("/restaurants/{id}", async (Guid id, Restaurant inputRestaurant, ApplicationDbContext db) =>
+app.MapPut("/restaurants", async (Restaurant restaurant, IRepository<Restaurant> repo) =>
 {
-    var restaurant = await db.Restaurants.FindAsync(id);
-
-    if (restaurant is null) return Results.NotFound();
-
-    restaurant.Name = inputRestaurant.Name;
-    restaurant.Address = inputRestaurant.Address;
-    restaurant.Email = inputRestaurant.Email;
-    restaurant.PhoneNumber = inputRestaurant.PhoneNumber;
-    restaurant.Employees = inputRestaurant.Employees;
-    restaurant.Orders = inputRestaurant.Orders;
-
-    await db.SaveChangesAsync();
+    repo.Update(restaurant);
 
     return Results.NoContent();
 });
 
-app.MapDelete("/restaurants/{id}", async (Guid id, ApplicationDbContext db) =>
+app.MapDelete("/restaurants/{id}", async (Guid id, IRepository<Restaurant> repo) =>
 {
-    if (await db.Restaurants.FindAsync(id) is not Restaurant restaurant) return Results.NotFound();
-    db.Restaurants.Remove(restaurant);
-    await db.SaveChangesAsync();
+    if (await repo.GetById(id) is not { } restaurant) return Results.NotFound();
+
+    repo.Delete(restaurant);
+
     return Results.Ok(restaurant);
 
 });
 
+app.MapGet("/orders", async (IRepository<Order> repo) =>
+    await repo.GetAll());
+
+app.MapGet("/orders/{id}", async (Guid id, IRepository<Order> repo) =>
+    await repo.GetById(id)
+        is { } order
+        ? Results.Ok(order)
+        : Results.NotFound());
+
+app.MapPost("/orders", async (Order order, IRepository<Order> repo) =>
+{
+    await repo.Create(order);
+
+    return Results.Created($"/orders/{order.Id}", order);
+});
+
+app.MapPut("/orders", async (Order order, IRepository<Order> repo) =>
+{
+    repo.Update(order);
+
+    return Results.NoContent();
+});
+
+app.MapDelete("/orders/{id}", async (Guid id, IRepository<Order> repo) =>
+{
+    if (await repo.GetById(id) is not { } order) return Results.NotFound();
+
+    repo.Delete(order);
+
+    return Results.Ok(order);
+
+});
 
 
 app.Run();

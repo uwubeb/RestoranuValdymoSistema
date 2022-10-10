@@ -12,5 +12,9 @@ public class ApplicationDbContext : DbContext
     
     public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Restaurant>().Navigation(r => r.Orders).AutoInclude();
+    }
 
 }
