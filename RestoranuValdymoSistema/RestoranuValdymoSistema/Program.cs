@@ -63,7 +63,7 @@ app.MapPost("/restaurants", async (Restaurant restaurant, IRepository<Restaurant
 
 app.MapPut("/restaurants", async (Restaurant restaurant, IRepository<Restaurant> repo) =>
 {
-    repo.Update(restaurant);
+    await repo.Update(restaurant);
 
     return Results.NoContent();
 });
@@ -72,7 +72,7 @@ app.MapDelete("/restaurants/{id}", async (Guid id, IRepository<Restaurant> repo)
 {
     if (await repo.GetById(id) is not { } restaurant) return Results.NotFound();
 
-    repo.Delete(restaurant);
+    await repo.Delete(restaurant);
 
     return Results.Ok(restaurant);
 
@@ -96,7 +96,7 @@ app.MapPost("/orders", async (Order order, IRepository<Order> repo) =>
 
 app.MapPut("/orders", async (Order order, IRepository<Order> repo) =>
 {
-    repo.Update(order);
+    await repo.Update(order);
 
     return Results.NoContent();
 });
@@ -105,11 +105,45 @@ app.MapDelete("/orders/{id}", async (Guid id, IRepository<Order> repo) =>
 {
     if (await repo.GetById(id) is not { } order) return Results.NotFound();
 
-    repo.Delete(order);
+    await repo.Delete(order);
 
     return Results.Ok(order);
 
 });
+
+app.MapGet("/notes", async (IRepository<Note> repo) =>
+    await repo.GetAll());
+
+app.MapGet("/notes/{id}", async (Guid id, IRepository<Note> repo) =>
+    await repo.GetById(id)
+        is { } note
+        ? Results.Ok(note)
+        : Results.NotFound());
+
+app.MapPost("/notes", async (Note note, IRepository<Note> repo) =>
+{
+    await repo.Create(note);
+
+    return Results.Created($"/notes/{note.Id}", note);
+});
+
+app.MapPut("/notes", async (Note note, IRepository<Note> repo) =>
+{
+    await repo.Update(note);
+
+    return Results.NoContent();
+});
+
+app.MapDelete("/notes/{id}", async (Guid id, IRepository<Note> repo) =>
+{
+    if (await repo.GetById(id) is not { } note) return Results.NotFound();
+
+    await repo.Delete(note);
+
+    return Results.Ok(note);
+
+});
+
 
 
 app.Run();
