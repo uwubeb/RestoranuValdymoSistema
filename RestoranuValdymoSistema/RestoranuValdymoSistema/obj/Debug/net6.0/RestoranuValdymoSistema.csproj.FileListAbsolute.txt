@@ -5,6 +5,7 @@ C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuV
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\net6.0\RestoranuValdymoSistema.runtimeconfig.json
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\net6.0\RestoranuValdymoSistema.dll
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\net6.0\RestoranuValdymoSistema.pdb
+C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\net6.0\Bogus.dll
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\net6.0\Humanizer.dll
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
@@ -12,6 +13,7 @@ C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuV
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\net6.0\Microsoft.OpenApi.dll
+C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\net6.0\Npgsql.dll
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
@@ -33,4 +35,3 @@ C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuV
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\obj\Debug\net6.0\RestoranuValdymoSistema.pdb
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\obj\Debug\net6.0\RestoranuValdymoSistema.genruntimeconfig.cache
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\obj\Debug\net6.0\ref\RestoranuValdymoSistema.dll
-C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\net6.0\Newtonsoft.Json.dll

@@ -15,6 +15,7 @@ C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuV
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\obj\Debug\docker-compose.dcproj.AssemblyReference.cache
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\obj\Debug\docker-compose.dcproj.CopyComplete
-C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\Npgsql.dll
+C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\Bogus.dll
+C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\Microsoft.EntityFrameworkCore.Relational.dll

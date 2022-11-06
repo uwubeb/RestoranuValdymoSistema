@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "/lb+IkJRfAXIN9GQpjcyEwEz9QD2VAFkhzmBcz1ukhvdqTqH4k7GSxJY1+WUA3xUHJx0iVELcnYtC3iP0NKkCQ==",
+  "dgSpecHash": "wqd8ymG9mwWoWGgK7R5JbcPY/iHT4CDP9xUUDgF2I3l5+181EUoI9IzHcdyOpYhKcObbozsOnughSfhYNhdcjw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Arunas\\OneDrive - Thruster\\Documents\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Arunas\\.nuget\\packages\\bogus\\34.0.2\\bogus.34.0.2.nupkg.sha512",
     "C:\\Users\\Arunas\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Arunas\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.9\\microsoft.entityframeworkcore.6.0.9.nupkg.sha512",
     "C:\\Users\\Arunas\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.9\\microsoft.entityframeworkcore.abstractions.6.0.9.nupkg.sha512",

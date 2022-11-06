@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using RestoranuValdymoSistema.Data;
 using RestoranuValdymoSistema.Data.Models;
 using RestoranuValdymoSistema.Infrastructure.Repositories;
+using RestoranuValdymoSistema.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
+builder.Services
+    .AddScoped(typeof(IRepository<>), typeof(BaseRepository<>))
+    .AddScoped<INoteRepository, NoteRepository>()
+    .AddScoped<IOrderRepository, OrderRepository>();
 
 var connectionStringKey = "DefaultConnection";
 var connectionString = builder.Configuration.GetConnectionString(connectionStringKey);
@@ -35,6 +39,7 @@ builder.Services.Configure<JsonOptions>(options =>
 
 
 var app = builder.Build();
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -43,8 +48,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
 
+app.UseHttpsRedirection();
+app.UseMiddleware<ErrorHandlerMiddleware>();
+
+
+// Restaurants
 app.MapGet("/restaurants", async (IRepository<Restaurant> repo) =>
     await repo.GetAll());
 
@@ -74,75 +83,125 @@ app.MapDelete("/restaurants/{id}", async (Guid id, IRepository<Restaurant> repo)
 
     await repo.Delete(restaurant);
 
-    return Results.Ok(restaurant);
+    return Results.NoContent();
 
 });
 
-app.MapGet("/orders", async (IRepository<Order> repo) =>
-    await repo.GetAll());
+// Orders
+app.MapGet("/restaurants/{restaurantId}/orders",
+    async (IOrderRepository repo, Guid restaurantId) => Results.Ok(await repo.Get(restaurantId)));
 
-app.MapGet("/orders/{id}", async (Guid id, IRepository<Order> repo) =>
-    await repo.GetById(id)
-        is { } order
-        ? Results.Ok(order)
-        : Results.NotFound());
-
-app.MapPost("/orders", async (Order order, IRepository<Order> repo) =>
+app.MapGet("/restaurants/{restaurantId}/orders/{orderId}",
+    async (Guid orderId, Guid restaurantId, IOrderRepository repo) => Results.Ok(await repo.Get(restaurantId, orderId)));
+  
+app.MapPost("/restaurants/{restaurantId}/orders", async (Order order, Guid restaurantId, IOrderRepository repo) =>
 {
-    await repo.Create(order);
-
-    return Results.Created($"/orders/{order.Id}", order);
+    await repo.Create(restaurantId, order);
+    return Results.NoContent();
 });
 
-app.MapPut("/orders", async (Order order, IRepository<Order> repo) =>
+app.MapPut("/restaurants/{restaurantId}/orders", async (Order order, Guid restaurantId, IOrderRepository repo) =>
 {
-    await repo.Update(order);
+    await repo.Update(restaurantId, order);
+    return Results.NoContent();
+});
+
+app.MapDelete("/restaurants/{restaurantId}/orders/{orderId}", async (Guid orderId, Guid restaurantId, IOrderRepository repo) =>
+{
+
+    await repo.Delete(restaurantId,orderId);
 
     return Results.NoContent();
 });
 
-app.MapDelete("/orders/{id}", async (Guid id, IRepository<Order> repo) =>
+// Notes
+app.MapGet("/restaurants/{restaurantId}/orders/{orderId}/notes",
+    async (IRepository<Note> repo, Guid restaurantId, Guid orderId) =>
+    {
+        var notes = await repo.GetWhere(x => x.OrderId == orderId && x.Order.RestaurantId == restaurantId);
+
+        return Results.Ok(notes);
+
+
+    });
+
+app.MapGet("/restaurants/{restaurantId}/orders/{orderId}/notes/{id}", async (Guid id, Guid restaurantId, Guid orderId, IRepository <Note> repo) =>
 {
-    if (await repo.GetById(id) is not { } order) return Results.NotFound();
+    var notes =await  repo.GetWhere(x => x.OrderId == orderId && x.Order.RestaurantId == restaurantId && x.Id == id);
+    var note = notes.FirstOrDefault();
+    if (note == null) return Results.NotFound();
+    return Results.Ok(note);
 
-    await repo.Delete(order);
-
-    return Results.Ok(order);
-
+    //return await repo.GetById(id)
+    //    is { } note
+    //    ? Results.Ok(note)
+    //    : Results.NotFound();
 });
 
-app.MapGet("/notes", async (IRepository<Note> repo) =>
-    await repo.GetAll());
-
-app.MapGet("/notes/{id}", async (Guid id, IRepository<Note> repo) =>
-    await repo.GetById(id)
-        is { } note
-        ? Results.Ok(note)
-        : Results.NotFound());
-
-app.MapPost("/notes", async (Note note, IRepository<Note> repo) =>
+app.MapPost("/restaurants/{restaurantId}/orders/{orderId}/notes", async (Note note, Guid restaurantId, Guid orderId,  IRepository <Note> repo) =>
 {
     await repo.Create(note);
 
     return Results.Created($"/notes/{note.Id}", note);
 });
 
-app.MapPut("/notes", async (Note note, IRepository<Note> repo) =>
+app.MapPut("/restaurants/{restaurantId}/orders/{orderId}/notes", async (Note note, Guid restaurantId, Guid orderId, IRepository <Note> repo) =>
 {
+    var notes = await repo.GetWhere(x => x.OrderId == orderId && x.Order.RestaurantId == restaurantId && x.Id == note.Id);
+    var getNote = notes.FirstOrDefault();
+    if (getNote == null) return Results.NotFound();
+
     await repo.Update(note);
 
     return Results.NoContent();
 });
 
-app.MapDelete("/notes/{id}", async (Guid id, IRepository<Note> repo) =>
+app.MapDelete("/restaurants/{restaurantId}/orders/{orderId}/notes/{id}", async (Guid id, Guid restaurantId, Guid orderId, IRepository <Note> repo) =>
 {
-    if (await repo.GetById(id) is not { } note) return Results.NotFound();
 
+    var notes = await repo.GetWhere(x => x.OrderId == orderId && x.Order.RestaurantId == restaurantId && x.Id == id);
+    var note = notes.FirstOrDefault();
+    if (note == null) return Results.NotFound();
     await repo.Delete(note);
-
-    return Results.Ok(note);
+    return Results.NoContent();
 
 });
+
+//// Employees
+//app.MapGet("/restaurants/employees", async (IRepository<Employee> repo) =>
+//    await repo.GetAll());
+
+//app.MapGet("/restaurants/employees/{id}", async (Guid id, IRepository<Employee> repo) =>
+//    await repo.GetById(id)
+//        is { } employee
+//        ? Results.Ok(employee)
+//        : Results.NotFound());
+
+//app.MapPost("/restaurants/employees", async (Employee employee, IRepository<Employee> repo) =>
+//    {
+//        await repo.Create(employee);
+
+//        return Results.Created($"/employees/{employee.Id}", employee);
+//    });
+
+//app.MapPut("/restaurants/employees", async (Employee employee, IRepository<Employee> repo) =>
+//    {
+//        await repo.Update(employee);
+
+//        return Results.NoContent();
+//    });
+
+//app.MapDelete("/restaurants/employees/{id}", async (Guid id, IRepository<Employee> repo) =>
+//    {
+//        if (await repo.GetById(id) is not { } employee) return Results.NotFound();
+
+//        await repo.Delete(employee);
+
+//        return Results.Ok(employee);
+
+//    });
+
+
 
 
 
