@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using RestoranuValdymoSistema;
 using RestoranuValdymoSistema.Data;
 using RestoranuValdymoSistema.Data.Models;
 using RestoranuValdymoSistema.Infrastructure.Repositories;
@@ -13,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services
     .AddScoped(typeof(IRepository<>), typeof(BaseRepository<>))
     .AddScoped<INoteRepository, NoteRepository>()
@@ -97,7 +99,7 @@ app.MapGet("/restaurants/{restaurantId}/orders/{orderId}",
 app.MapPost("/restaurants/{restaurantId}/orders", async (Order order, Guid restaurantId, IOrderRepository repo) =>
 {
     await repo.Create(restaurantId, order);
-    return Results.NoContent();
+    return Results.Ok(order);
 });
 
 app.MapPut("/restaurants/{restaurantId}/orders", async (Order order, Guid restaurantId, IOrderRepository repo) =>
@@ -116,55 +118,37 @@ app.MapDelete("/restaurants/{restaurantId}/orders/{orderId}", async (Guid orderI
 
 // Notes
 app.MapGet("/restaurants/{restaurantId}/orders/{orderId}/notes",
-    async (IRepository<Note> repo, Guid restaurantId, Guid orderId) =>
-    {
-        var notes = await repo.GetWhere(x => x.OrderId == orderId && x.Order.RestaurantId == restaurantId);
-
-        return Results.Ok(notes);
-
-
-    });
-
-app.MapGet("/restaurants/{restaurantId}/orders/{orderId}/notes/{id}", async (Guid id, Guid restaurantId, Guid orderId, IRepository <Note> repo) =>
+    async (INoteRepository repo, Guid restaurantId, Guid orderId) =>
 {
-    var notes =await  repo.GetWhere(x => x.OrderId == orderId && x.Order.RestaurantId == restaurantId && x.Id == id);
-    var note = notes.FirstOrDefault();
-    if (note == null) return Results.NotFound();
+    var notes = await repo.Get(restaurantId, orderId);
+    return Results.Ok(notes);
+});
+
+app.MapGet("/restaurants/{restaurantId}/orders/{orderId}/notes/{noteId}", async (Guid noteId, Guid restaurantId, Guid orderId, INoteRepository repo) =>
+{
+    var note = await repo.Get(restaurantId, orderId, noteId);
     return Results.Ok(note);
-
-    //return await repo.GetById(id)
-    //    is { } note
-    //    ? Results.Ok(note)
-    //    : Results.NotFound();
 });
 
-app.MapPost("/restaurants/{restaurantId}/orders/{orderId}/notes", async (Note note, Guid restaurantId, Guid orderId,  IRepository <Note> repo) =>
+app.MapPost("/restaurants/{restaurantId}/orders/{orderId}/notes", async (Note note, Guid restaurantId, Guid orderId, INoteRepository repo) =>
 {
-    await repo.Create(note);
+    await repo.Create(restaurantId, orderId, note);
 
-    return Results.Created($"/notes/{note.Id}", note);
+    return Results.Ok(note);
 });
 
-app.MapPut("/restaurants/{restaurantId}/orders/{orderId}/notes", async (Note note, Guid restaurantId, Guid orderId, IRepository <Note> repo) =>
+app.MapPut("/restaurants/{restaurantId}/orders/{orderId}/notes", async (Note note, Guid restaurantId, Guid orderId, INoteRepository repo) =>
 {
-    var notes = await repo.GetWhere(x => x.OrderId == orderId && x.Order.RestaurantId == restaurantId && x.Id == note.Id);
-    var getNote = notes.FirstOrDefault();
-    if (getNote == null) return Results.NotFound();
 
-    await repo.Update(note);
+    await repo.Update(restaurantId, orderId, note);
 
     return Results.NoContent();
 });
 
-app.MapDelete("/restaurants/{restaurantId}/orders/{orderId}/notes/{id}", async (Guid id, Guid restaurantId, Guid orderId, IRepository <Note> repo) =>
+app.MapDelete("/restaurants/{restaurantId}/orders/{orderId}/notes/{noteId}", async (Guid noteId, Guid restaurantId, Guid orderId, INoteRepository repo) =>
 {
-
-    var notes = await repo.GetWhere(x => x.OrderId == orderId && x.Order.RestaurantId == restaurantId && x.Id == id);
-    var note = notes.FirstOrDefault();
-    if (note == null) return Results.NotFound();
-    await repo.Delete(note);
+    await repo.Delete(restaurantId, orderId, noteId);
     return Results.NoContent();
-
 });
 
 //// Employees

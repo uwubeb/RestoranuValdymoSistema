@@ -1,11 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "wqd8ymG9mwWoWGgK7R5JbcPY/iHT4CDP9xUUDgF2I3l5+181EUoI9IzHcdyOpYhKcObbozsOnughSfhYNhdcjw==",
+  "dgSpecHash": "HEdhigzydxbqYpi4o0/U8arkRkh/UXKeHkTVKkL5AeLAgq4c4ZBt3hIo5EQkc+Ngdkh7oDEEWIY8v4NhmGl7HQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Arunas\\OneDrive - Thruster\\Documents\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Arunas\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
+    "C:\\Users\\Arunas\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "C:\\Users\\Arunas\\.nuget\\packages\\bogus\\34.0.2\\bogus.34.0.2.nupkg.sha512",
     "C:\\Users\\Arunas\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\Arunas\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Arunas\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.9\\microsoft.entityframeworkcore.6.0.9.nupkg.sha512",
     "C:\\Users\\Arunas\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.9\\microsoft.entityframeworkcore.abstractions.6.0.9.nupkg.sha512",
     "C:\\Users\\Arunas\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\6.0.9\\microsoft.entityframeworkcore.analyzers.6.0.9.nupkg.sha512",

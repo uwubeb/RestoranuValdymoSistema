@@ -49,9 +49,10 @@ public class NoteRepository : BaseRepository<Note>, INoteRepository
             await DbContext.Notes
                 .Include(x => x.Order)
                 .Where(o => o.Order.RestaurantId == restaurantId && o.OrderId == orderId)
-                .FirstOrDefaultAsync(x => x.Id == note.Id);
+                .FirstOrDefaultAsync(x => x.Id == note.Id) ??
+            throw new NotFoundException(ExceptionConstants.NotFound<Note>());
 
-        noteToUpdate = note ?? throw new NotFoundException(ExceptionConstants.NotFound<Note>());
+        noteToUpdate = note;
         DbContext.Notes.Update(noteToUpdate);
         await DbContext.SaveChangesAsync();
     }
