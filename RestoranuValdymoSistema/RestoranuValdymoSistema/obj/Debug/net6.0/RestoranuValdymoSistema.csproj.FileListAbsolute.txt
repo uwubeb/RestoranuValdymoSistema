@@ -35,3 +35,5 @@ C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuV
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\obj\Debug\net6.0\RestoranuValdymoSistema.pdb
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\obj\Debug\net6.0\RestoranuValdymoSistema.genruntimeconfig.cache
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\obj\Debug\net6.0\ref\RestoranuValdymoSistema.dll
+C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

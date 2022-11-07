@@ -19,3 +19,5 @@ C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuV
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\Npgsql.dll
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\Bogus.dll
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\AutoMapper.dll
+C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

@@ -22,13 +22,13 @@ public class NoteRepository : BaseRepository<Note>, INoteRepository
 
     }
 
-    public async Task<Note?> Get(Guid restaurantId, Guid orderId, Guid noteId)
+    public async Task<Note> Get(Guid restaurantId, Guid orderId, Guid noteId)
     {
         return await DbContext.Notes
             .Include(x => x.Order)
             .Where(o => o.Order.RestaurantId == restaurantId && o.OrderId == orderId)
-            .FirstOrDefaultAsync(x => x.Id == noteId);
-        
+            .FirstOrDefaultAsync(x => x.Id == noteId) ?? throw new NotFoundException(ExceptionConstants.NotFound<Note>());
+
     }
 
     public async Task Create(Guid restaurantId, Guid orderId, Note note)
@@ -52,7 +52,7 @@ public class NoteRepository : BaseRepository<Note>, INoteRepository
                 .FirstOrDefaultAsync(x => x.Id == note.Id) ??
             throw new NotFoundException(ExceptionConstants.NotFound<Note>());
 
-        noteToUpdate = note;
+        noteToUpdate.Text = note.Text;
         DbContext.Notes.Update(noteToUpdate);
         await DbContext.SaveChangesAsync();
     }
@@ -68,14 +68,4 @@ public class NoteRepository : BaseRepository<Note>, INoteRepository
         DbContext.Remove(note);
         await DbContext.SaveChangesAsync();
     }
-}
-
-public interface INoteRepository
-{
-    Task<List<Note>> Get(Guid restaurantId, Guid orderId);
-    Task<Note?> Get(Guid restaurantId, Guid orderId, Guid noteId);
-    Task Create(Guid restaurantId, Guid orderId, Note note);
-    Task Update(Guid restaurantId, Guid orderId, Note note);
-    Task Delete(Guid restaurantId, Guid orderId, Guid noteId);
-
 }

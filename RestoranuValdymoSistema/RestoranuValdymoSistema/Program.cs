@@ -1,9 +1,13 @@
 using System.Text.Json.Serialization;
+using AutoMapper;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using RestoranuValdymoSistema;
 using RestoranuValdymoSistema.Data;
+using RestoranuValdymoSistema.Data.Contracts.Note;
+using RestoranuValdymoSistema.Data.Contracts.Order;
+using RestoranuValdymoSistema.Data.Contracts.Restaurant;
 using RestoranuValdymoSistema.Data.Models;
 using RestoranuValdymoSistema.Infrastructure.Repositories;
 using RestoranuValdymoSistema.Middleware;
@@ -18,7 +22,8 @@ builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services
     .AddScoped(typeof(IRepository<>), typeof(BaseRepository<>))
     .AddScoped<INoteRepository, NoteRepository>()
-    .AddScoped<IOrderRepository, OrderRepository>();
+    .AddScoped<IOrderRepository, OrderRepository>()
+    .AddScoped<IRestaurantRepository, RestaurantRepository>();
 
 var connectionStringKey = "DefaultConnection";
 var connectionString = builder.Configuration.GetConnectionString(connectionStringKey);
@@ -56,34 +61,39 @@ app.UseMiddleware<ErrorHandlerMiddleware>();
 
 
 // Restaurants
-app.MapGet("/restaurants", async (IRepository<Restaurant> repo) =>
-    await repo.GetAll());
-
-app.MapGet("/restaurants/{id}", async (Guid id, IRepository<Restaurant> repo) =>
-    await repo.GetById(id)
-        is { } restaurant
-        ? Results.Ok(restaurant)
-        : Results.NotFound());
-
-app.MapPost("/restaurants", async (Restaurant restaurant, IRepository<Restaurant> repo) =>
+app.MapGet("/restaurants", async (IRestaurantRepository repo, IMapper mapper) =>
 {
-    await repo.Create(restaurant);
-
-    return Results.Created($"/restaurants/{restaurant.Id}", restaurant);
+    List<RestaurantContract> restaurantContracts = mapper.Map<List<RestaurantContract>>(await repo.Get());
+    return Results.Ok(restaurantContracts);
 });
 
-app.MapPut("/restaurants", async (Restaurant restaurant, IRepository<Restaurant> repo) =>
+app.MapGet("/restaurants/{id}", async (Guid id, IRestaurantRepository repo, IMapper mapper) =>
 {
+    var restaurant = await repo.Get(id);
+    var restaurantContract = mapper.Map<RestaurantContract>(restaurant);
+    return Results.Ok(restaurantContract);
+});
+
+app.MapPost("/restaurants", async (CreateRestaurantContract createRestaurantContract, IRepository<Restaurant> repo, IMapper mapper ) =>
+{
+    var restaurant = mapper.Map<Restaurant>(createRestaurantContract);
+    await repo.Create(restaurant);
+    var restaurantContract = mapper.Map<RestaurantContract>(restaurant);
+    
+    return Results.Created($"/restaurants/{restaurantContract.Id}", restaurantContract);
+});
+
+app.MapPut("/restaurants", async (UpdateRestaurantContract restaurantContract, IRestaurantRepository repo, IMapper mapper) =>
+{
+    var restaurant = mapper.Map<Restaurant>(restaurantContract);
     await repo.Update(restaurant);
 
     return Results.NoContent();
 });
 
-app.MapDelete("/restaurants/{id}", async (Guid id, IRepository<Restaurant> repo) =>
+app.MapDelete("/restaurants/{id}", async (Guid id, IRestaurantRepository repo) =>
 {
-    if (await repo.GetById(id) is not { } restaurant) return Results.NotFound();
-
-    await repo.Delete(restaurant);
+    await repo.Delete(id);
 
     return Results.NoContent();
 
@@ -91,57 +101,70 @@ app.MapDelete("/restaurants/{id}", async (Guid id, IRepository<Restaurant> repo)
 
 // Orders
 app.MapGet("/restaurants/{restaurantId}/orders",
-    async (IOrderRepository repo, Guid restaurantId) => Results.Ok(await repo.Get(restaurantId)));
-
-app.MapGet("/restaurants/{restaurantId}/orders/{orderId}",
-    async (Guid orderId, Guid restaurantId, IOrderRepository repo) => Results.Ok(await repo.Get(restaurantId, orderId)));
-  
-app.MapPost("/restaurants/{restaurantId}/orders", async (Order order, Guid restaurantId, IOrderRepository repo) =>
+    async (IOrderRepository repo, Guid restaurantId, IMapper mapper) =>
 {
-    await repo.Create(restaurantId, order);
-    return Results.Ok(order);
+    var orders = await repo.Get(restaurantId);
+    var orderContracts = mapper.Map<List<OrderContract>>(orders);
+    return Results.Ok(orderContracts);
 });
 
-app.MapPut("/restaurants/{restaurantId}/orders", async (Order order, Guid restaurantId, IOrderRepository repo) =>
+app.MapGet("/restaurants/{restaurantId}/orders/{orderId}",
+    async (Guid orderId, Guid restaurantId, IOrderRepository repo, IMapper mapper) =>
 {
+    var order = await repo.Get(restaurantId, orderId);
+    var orderContract = mapper.Map<OrderContract>(order);
+    return Results.Ok(orderContract);
+});
+
+app.MapPost("/restaurants/{restaurantId}/orders", async (CreateOrderContract orderContract, Guid restaurantId, IOrderRepository repo, IMapper mapper) =>
+{
+    var order = mapper.Map<Order>(orderContract);
+    await repo.Create(restaurantId, order);
+    var orderContractResult = mapper.Map<OrderContract>(order);
+    return Results.Created($"/restaurants/{restaurantId}/orders/{orderContractResult.Id}", orderContractResult);
+});
+
+app.MapPut("/restaurants/{restaurantId}/orders", async (UpdateOrderContract orderContract, Guid restaurantId, IOrderRepository repo, IMapper mapper) =>
+{
+    var order = mapper.Map<Order>(orderContract);
     await repo.Update(restaurantId, order);
     return Results.NoContent();
 });
 
 app.MapDelete("/restaurants/{restaurantId}/orders/{orderId}", async (Guid orderId, Guid restaurantId, IOrderRepository repo) =>
 {
-
     await repo.Delete(restaurantId,orderId);
-
     return Results.NoContent();
 });
 
 // Notes
 app.MapGet("/restaurants/{restaurantId}/orders/{orderId}/notes",
-    async (INoteRepository repo, Guid restaurantId, Guid orderId) =>
+    async (INoteRepository repo, Guid restaurantId, Guid orderId, IMapper mapper) =>
 {
     var notes = await repo.Get(restaurantId, orderId);
-    return Results.Ok(notes);
+    var noteContracts = mapper.Map<List<NoteContract>>(notes);
+    return Results.Ok(noteContracts);
 });
 
-app.MapGet("/restaurants/{restaurantId}/orders/{orderId}/notes/{noteId}", async (Guid noteId, Guid restaurantId, Guid orderId, INoteRepository repo) =>
+app.MapGet("/restaurants/{restaurantId}/orders/{orderId}/notes/{noteId}", async (Guid noteId, Guid restaurantId, Guid orderId, INoteRepository repo, IMapper mapper) =>
 {
     var note = await repo.Get(restaurantId, orderId, noteId);
-    return Results.Ok(note);
+    var noteContract = mapper.Map<NoteContract>(note);
+    return Results.Ok(noteContract);
 });
 
-app.MapPost("/restaurants/{restaurantId}/orders/{orderId}/notes", async (Note note, Guid restaurantId, Guid orderId, INoteRepository repo) =>
+app.MapPost("/restaurants/{restaurantId}/orders/{orderId}/notes", async (CreateNoteContract noteContract, Guid restaurantId, Guid orderId, INoteRepository repo, IMapper mapper) =>
 {
+    var note = mapper.Map<Note>(noteContract);
     await repo.Create(restaurantId, orderId, note);
-
-    return Results.Ok(note);
+    var noteContractResult = mapper.Map<NoteContract>(note);
+    return Results.Created($"/restaurants/{restaurantId}/orders/{orderId}/notes/{noteContractResult.Id}", noteContractResult);
 });
 
-app.MapPut("/restaurants/{restaurantId}/orders/{orderId}/notes", async (Note note, Guid restaurantId, Guid orderId, INoteRepository repo) =>
+app.MapPut("/restaurants/{restaurantId}/orders/{orderId}/notes", async (UpdateNoteContract noteContract, Guid restaurantId, Guid orderId, INoteRepository repo, IMapper mapper) =>
 {
-
+    var note = mapper.Map<Note>(noteContract);
     await repo.Update(restaurantId, orderId, note);
-
     return Results.NoContent();
 });
 

@@ -19,11 +19,11 @@ public class OrderRepository : BaseRepository<Order>, IOrderRepository
          
     }
 
-    public async Task<Order?> Get(Guid restaurantId, Guid orderId)
+    public async Task<Order> Get(Guid restaurantId, Guid orderId)
     {
         return await DbContext.Orders.Where(o => o.RestaurantId == restaurantId && o.Id == orderId)
-            .FirstOrDefaultAsync();
-        
+            .FirstOrDefaultAsync() ?? throw new NotFoundException(ExceptionConstants.NotFound<Order>());
+
     }
 
     public async Task Create(Guid restaurantId, Order order)
@@ -42,7 +42,10 @@ public class OrderRepository : BaseRepository<Order>, IOrderRepository
         var orderToUpdate = await DbContext.Orders.FirstOrDefaultAsync(o => o.Id == order.Id && o.RestaurantId == restaurantId);
         if (orderToUpdate is null) throw new NotFoundException(ExceptionConstants.NotFound<Order>());
 
-        orderToUpdate = order;
+        orderToUpdate.Description = order.Description;
+        orderToUpdate.Item = order.Item;
+        orderToUpdate.Price = order.Price;
+        orderToUpdate.Quantity = order.Quantity;
         DbContext.Orders.Update(orderToUpdate);
         await DbContext.SaveChangesAsync();
     }
