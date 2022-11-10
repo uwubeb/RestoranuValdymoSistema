@@ -10,11 +10,11 @@ public class ApplicationDbContext : DbContext
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<Note> Notes { get; set; }
-    
+    public DbSet<User> Users { get; set; }
     public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
+    {   
         modelBuilder.Entity<Restaurant>().Navigation(r => r.Orders).AutoInclude();
         //modelBuilder.Entity<Order>().Navigation(o => o.Restaurant).AutoInclude();
 

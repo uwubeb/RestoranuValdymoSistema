@@ -21,3 +21,8 @@ C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuV
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\AutoMapper.dll
 C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\Microsoft.IdentityModel.Logging.dll
+C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\Microsoft.IdentityModel.Abstractions.dll

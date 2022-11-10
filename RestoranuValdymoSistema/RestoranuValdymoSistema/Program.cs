@@ -8,9 +8,11 @@ using RestoranuValdymoSistema.Data;
 using RestoranuValdymoSistema.Data.Contracts.Note;
 using RestoranuValdymoSistema.Data.Contracts.Order;
 using RestoranuValdymoSistema.Data.Contracts.Restaurant;
+using RestoranuValdymoSistema.Data.Contracts.User;
 using RestoranuValdymoSistema.Data.Models;
 using RestoranuValdymoSistema.Infrastructure.Repositories;
 using RestoranuValdymoSistema.Middleware;
+using RestoranuValdymoSistema.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +25,8 @@ builder.Services
     .AddScoped(typeof(IRepository<>), typeof(BaseRepository<>))
     .AddScoped<INoteRepository, NoteRepository>()
     .AddScoped<IOrderRepository, OrderRepository>()
-    .AddScoped<IRestaurantRepository, RestaurantRepository>();
+    .AddScoped<IRestaurantRepository, RestaurantRepository>()
+    .AddScoped<IAuthService, AuthService>();
 
 var connectionStringKey = "DefaultConnection";
 var connectionString = builder.Configuration.GetConnectionString(connectionStringKey);
@@ -174,42 +177,23 @@ app.MapDelete("/restaurants/{restaurantId}/orders/{orderId}/notes/{noteId}", asy
     return Results.NoContent();
 });
 
-//// Employees
-//app.MapGet("/restaurants/employees", async (IRepository<Employee> repo) =>
-//    await repo.GetAll());
 
-//app.MapGet("/restaurants/employees/{id}", async (Guid id, IRepository<Employee> repo) =>
-//    await repo.GetById(id)
-//        is { } employee
-//        ? Results.Ok(employee)
-//        : Results.NotFound());
+app.MapPost("/register", async (UserContract request, IAuthService authService) =>
+{
+    var user = await authService.Register(request);
+    return Results.Ok(user);
+});
 
-//app.MapPost("/restaurants/employees", async (Employee employee, IRepository<Employee> repo) =>
-//    {
-//        await repo.Create(employee);
+app.MapGet("/users", async (IRepository<User> repo) =>
+{
+    var users = await repo.GetAll();
+    return Results.Ok(users);
+});
 
-//        return Results.Created($"/employees/{employee.Id}", employee);
-//    });
-
-//app.MapPut("/restaurants/employees", async (Employee employee, IRepository<Employee> repo) =>
-//    {
-//        await repo.Update(employee);
-
-//        return Results.NoContent();
-//    });
-
-//app.MapDelete("/restaurants/employees/{id}", async (Guid id, IRepository<Employee> repo) =>
-//    {
-//        if (await repo.GetById(id) is not { } employee) return Results.NotFound();
-
-//        await repo.Delete(employee);
-
-//        return Results.Ok(employee);
-
-//    });
-
-
-
-
+app.MapPost("/login", async (UserContract request, IAuthService authService) =>
+{
+    var jwt = await authService.Login(request);
+    return Results.Ok(jwt);
+});
 
 app.Run();

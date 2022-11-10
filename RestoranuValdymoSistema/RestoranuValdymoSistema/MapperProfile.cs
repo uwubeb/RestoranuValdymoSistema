@@ -2,6 +2,7 @@
 using RestoranuValdymoSistema.Data.Contracts.Note;
 using RestoranuValdymoSistema.Data.Contracts.Order;
 using RestoranuValdymoSistema.Data.Contracts.Restaurant;
+using RestoranuValdymoSistema.Data.Contracts.User;
 using RestoranuValdymoSistema.Data.Models;
 
 namespace RestoranuValdymoSistema;
@@ -46,5 +47,7 @@ public class MapperProfile : Profile
             .ForMember(dest => dest.Order, opt => opt.Ignore())
             .ForMember(dest => dest.OrderId, opt => opt.Ignore());
 
+
+        CreateMap<User, UserContract>();
     }
 }
