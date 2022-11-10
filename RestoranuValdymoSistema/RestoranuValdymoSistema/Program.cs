@@ -1,8 +1,13 @@
+using System.Text;
 using System.Text.Json.Serialization;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using RestoranuValdymoSistema;
 using RestoranuValdymoSistema.Data;
 using RestoranuValdymoSistema.Data.Contracts.Note;
@@ -13,13 +18,43 @@ using RestoranuValdymoSistema.Data.Models;
 using RestoranuValdymoSistema.Infrastructure.Repositories;
 using RestoranuValdymoSistema.Middleware;
 using RestoranuValdymoSistema.Services;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        Description = "Standard Authorization header using the Bearer scheme (\"bearer {token}\")",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+});
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+                .GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+builder.Services.AddAuthorization();
+builder.Services.AddCors(options => options.AddPolicy(name: "NgOrigins",
+    policy =>
+    {
+        policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+    }));
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services
     .AddScoped(typeof(IRepository<>), typeof(BaseRepository<>))
@@ -60,24 +95,26 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseMiddleware<ErrorHandlerMiddleware>();
 
 
 // Restaurants
-app.MapGet("/restaurants", async (IRestaurantRepository repo, IMapper mapper) =>
+app.MapGet("/restaurants", [Authorize] async (IRestaurantRepository repo, IMapper mapper) =>
 {
     List<RestaurantContract> restaurantContracts = mapper.Map<List<RestaurantContract>>(await repo.Get());
     return Results.Ok(restaurantContracts);
 });
 
-app.MapGet("/restaurants/{id}", async (Guid id, IRestaurantRepository repo, IMapper mapper) =>
+app.MapGet("/restaurants/{id}", [Authorize] async (Guid id, IRestaurantRepository repo, IMapper mapper) =>
 {
     var restaurant = await repo.Get(id);
     var restaurantContract = mapper.Map<RestaurantContract>(restaurant);
     return Results.Ok(restaurantContract);
 });
 
-app.MapPost("/restaurants", async (CreateRestaurantContract createRestaurantContract, IRepository<Restaurant> repo, IMapper mapper ) =>
+app.MapPost("/restaurants", [Authorize] async (CreateRestaurantContract createRestaurantContract, IRepository<Restaurant> repo, IMapper mapper ) =>
 {
     var restaurant = mapper.Map<Restaurant>(createRestaurantContract);
     await repo.Create(restaurant);
@@ -86,7 +123,7 @@ app.MapPost("/restaurants", async (CreateRestaurantContract createRestaurantCont
     return Results.Created($"/restaurants/{restaurantContract.Id}", restaurantContract);
 });
 
-app.MapPut("/restaurants", async (UpdateRestaurantContract restaurantContract, IRestaurantRepository repo, IMapper mapper) =>
+app.MapPut("/restaurants", [Authorize] async (UpdateRestaurantContract restaurantContract, IRestaurantRepository repo, IMapper mapper) =>
 {
     var restaurant = mapper.Map<Restaurant>(restaurantContract);
     await repo.Update(restaurant);
@@ -94,7 +131,7 @@ app.MapPut("/restaurants", async (UpdateRestaurantContract restaurantContract, I
     return Results.NoContent();
 });
 
-app.MapDelete("/restaurants/{id}", async (Guid id, IRestaurantRepository repo) =>
+app.MapDelete("/restaurants/{id}", [Authorize] async (Guid id, IRestaurantRepository repo) =>
 {
     await repo.Delete(id);
 

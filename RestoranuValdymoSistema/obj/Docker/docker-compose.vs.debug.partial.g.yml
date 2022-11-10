@@ -3,7 +3,7 @@ version: '3.4'
 services:
   restoranuvaldymosistema:
     image: restoranuvaldymosistema:dev
-    container_name: RestoranuValdymoSistema_1
+    container_name: RestoranuValdymoSistema
     build:
       target: base
       labels:

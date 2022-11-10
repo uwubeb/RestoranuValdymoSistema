@@ -1,5 +1,23 @@
 name: dockercompose16546061949907327290
 services:
+  postgres:
+    environment:
+      POSTGRES_DB: rvs
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    image: postgres
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 5432
+      published: "5432"
+      protocol: tcp
+    volumes:
+    - type: volume
+      source: postgres
+      target: /var/lib/postgresql/data
+      volume: {}
   restoranuvaldymosistema:
     build:
       context: C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema
@@ -9,6 +27,9 @@ services:
         com.microsoft.visual-studio.project-name: RestoranuValdymoSistema
       target: base
     container_name: RestoranuValdymoSistema
+    depends_on:
+      postgres:
+        condition: service_started
     entrypoint:
     - tail
     - -f
@@ -80,3 +101,6 @@ services:
 networks:
   default:
     name: dockercompose16546061949907327290_default
+volumes:
+  postgres:
+    name: dockercompose16546061949907327290_postgres
