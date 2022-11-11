@@ -30,3 +30,10 @@ Prisiregistravęs, kompanijos vadovas, galės:
   4.1 Peržiūrėti, keisti užsakymus
   4.2 *Palikti pastabas*
 5. Matyti frančižės veiklos apibendrinimą
+
+## Naudojimas
+http://20.91.161.241/swagger/index.html
+
+CREATE/PUT/DELETE endpointai pasiekiami tik turint admin rolę.
+GET endpointai pasiekiami turint user arba admin rolę.
+/login, /register pasiekiami visų - user/admin/svečias.
