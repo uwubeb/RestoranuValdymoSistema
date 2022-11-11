@@ -34,6 +34,7 @@ Prisiregistravęs, kompanijos vadovas, galės:
 ## Naudojimas
 http://20.91.161.241/swagger/index.html
 
-CREATE/PUT/DELETE endpointai pasiekiami tik turint admin rolę.
-GET endpointai pasiekiami turint user arba admin rolę.
-/login, /register pasiekiami visų - user/admin/svečias.
+* CREATE/PUT/DELETE endpointai pasiekiami tik turint admin rolę.
+* GET endpointai pasiekiami turint user arba admin rolę.
+* /login, /register pasiekiami visų - user/admin/svečias
+* Autorizacija naudoja JWT, tokene kaip claim yra pridėta rolė. Bearer token gaunamas per /login endpointą
