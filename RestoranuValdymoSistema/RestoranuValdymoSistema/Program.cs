@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RestoranuValdymoSistema;
 using RestoranuValdymoSistema.Data;
+using RestoranuValdymoSistema.Data.Constants;
 using RestoranuValdymoSistema.Data.Contracts.Note;
 using RestoranuValdymoSistema.Data.Contracts.Order;
 using RestoranuValdymoSistema.Data.Contracts.Restaurant;
@@ -101,20 +102,20 @@ app.UseMiddleware<ErrorHandlerMiddleware>();
 
 
 // Restaurants
-app.MapGet("/restaurants", [Authorize] async (IRestaurantRepository repo, IMapper mapper) =>
+app.MapGet("/restaurants", [Authorize(Roles = "user, admin")] async (IRestaurantRepository repo, IMapper mapper) =>
 {
     List<RestaurantContract> restaurantContracts = mapper.Map<List<RestaurantContract>>(await repo.Get());
     return Results.Ok(restaurantContracts);
 });
 
-app.MapGet("/restaurants/{id}", [Authorize] async (Guid id, IRestaurantRepository repo, IMapper mapper) =>
+app.MapGet("/restaurants/{id}", [Authorize(Roles = "user, admin")] async (Guid id, IRestaurantRepository repo, IMapper mapper) =>
 {
     var restaurant = await repo.Get(id);
     var restaurantContract = mapper.Map<RestaurantContract>(restaurant);
     return Results.Ok(restaurantContract);
 });
 
-app.MapPost("/restaurants", [Authorize] async (CreateRestaurantContract createRestaurantContract, IRepository<Restaurant> repo, IMapper mapper ) =>
+app.MapPost("/restaurants", [Authorize(Roles = "admin")] async (CreateRestaurantContract createRestaurantContract, IRepository<Restaurant> repo, IMapper mapper ) =>
 {
     var restaurant = mapper.Map<Restaurant>(createRestaurantContract);
     await repo.Create(restaurant);
@@ -123,7 +124,7 @@ app.MapPost("/restaurants", [Authorize] async (CreateRestaurantContract createRe
     return Results.Created($"/restaurants/{restaurantContract.Id}", restaurantContract);
 });
 
-app.MapPut("/restaurants", [Authorize] async (UpdateRestaurantContract restaurantContract, IRestaurantRepository repo, IMapper mapper) =>
+app.MapPut("/restaurants", [Authorize(Roles = "admin")] async (UpdateRestaurantContract restaurantContract, IRestaurantRepository repo, IMapper mapper) =>
 {
     var restaurant = mapper.Map<Restaurant>(restaurantContract);
     await repo.Update(restaurant);
@@ -215,7 +216,7 @@ app.MapDelete("/restaurants/{restaurantId}/orders/{orderId}/notes/{noteId}", asy
 });
 
 
-app.MapPost("/register", async (UserContract request, IAuthService authService) =>
+app.MapPost("/register", async (CreateUserRequest request, IAuthService authService) =>
 {
     var user = await authService.Register(request);
     return Results.Ok(user);

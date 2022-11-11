@@ -23,15 +23,20 @@ public class AuthService : IAuthService
     }
 
 
-    public async Task<User> Register(UserContract request)
+    public async Task<User> Register(CreateUserRequest request)
     {
         CreatePasswordHash(request.Password, out var passwordHash, out var passwordSalt);
 
+        if (request.Role.ToLower() != RolesConstants.Admin && request.Role.ToLower() != RolesConstants.User && request.Role.ToLower() != RolesConstants.Guest)
+        {
+            throw new AppException(ExceptionConstants.InvalidRole);
+        }
         var user = new User
         {
             Username = request.Username,
             PasswordHash = passwordHash,
-            PasswordSalt = passwordSalt
+            PasswordSalt = passwordSalt,
+            Role = request.Role.ToLower()
         };
 
         if (await _userRepository.Exists(x => x.Username == user.Username))
@@ -71,6 +76,7 @@ public class AuthService : IAuthService
         List<Claim> claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, user.Username),
+            new Claim(ClaimTypes.Role, user.Role)
         };
 
         var key = new SymmetricSecurityKey(
@@ -91,6 +97,6 @@ public class AuthService : IAuthService
 
 public interface IAuthService
 {
-    public Task<User> Register(UserContract request);
+    public Task<User> Register(CreateUserRequest request);
     public Task<string> Login(UserContract request);
 }
