@@ -102,20 +102,20 @@ app.UseMiddleware<ErrorHandlerMiddleware>();
 
 
 // Restaurants
-app.MapGet("/restaurants", [Authorize(Roles = "user, admin")] async (IRestaurantRepository repo, IMapper mapper) =>
+app.MapGet("/restaurants", /*[Authorize(Roles = "user, admin")]*/ [AllowAnonymous] async (IRestaurantRepository repo, IMapper mapper) =>
 {
     List<RestaurantContract> restaurantContracts = mapper.Map<List<RestaurantContract>>(await repo.Get());
     return Results.Ok(restaurantContracts);
 });
 
-app.MapGet("/restaurants/{id}", [Authorize(Roles = "user, admin")] async (Guid id, IRestaurantRepository repo, IMapper mapper) =>
+app.MapGet("/restaurants/{id}",  /*[Authorize(Roles = "user, admin")]*/ [AllowAnonymous] async (Guid id, IRestaurantRepository repo, IMapper mapper) =>
 {
     var restaurant = await repo.Get(id);
     var restaurantContract = mapper.Map<RestaurantContract>(restaurant);
     return Results.Ok(restaurantContract);
 });
 
-app.MapPost("/restaurants", [Authorize(Roles = "admin")] async (CreateRestaurantContract createRestaurantContract, IRepository<Restaurant> repo, IMapper mapper ) =>
+app.MapPost("/restaurants",  /*[Authorize(Roles = "admin")]*/ [AllowAnonymous] async (CreateRestaurantContract createRestaurantContract, IRepository<Restaurant> repo, IMapper mapper ) =>
 {
     var restaurant = mapper.Map<Restaurant>(createRestaurantContract);
     await repo.Create(restaurant);
@@ -124,7 +124,7 @@ app.MapPost("/restaurants", [Authorize(Roles = "admin")] async (CreateRestaurant
     return Results.Created($"/restaurants/{restaurantContract.Id}", restaurantContract);
 });
 
-app.MapPut("/restaurants", [Authorize(Roles = "admin")] async (UpdateRestaurantContract restaurantContract, IRestaurantRepository repo, IMapper mapper) =>
+app.MapPut("/restaurants",  /*[Authorize(Roles = "admin")]*/ [AllowAnonymous] async (UpdateRestaurantContract restaurantContract, IRestaurantRepository repo, IMapper mapper) =>
 {
     var restaurant = mapper.Map<Restaurant>(restaurantContract);
     await repo.Update(restaurant);
@@ -132,7 +132,7 @@ app.MapPut("/restaurants", [Authorize(Roles = "admin")] async (UpdateRestaurantC
     return Results.NoContent();
 });
 
-app.MapDelete("/restaurants/{id}", [Authorize(Roles = "admin")] async (Guid id, IRestaurantRepository repo) =>
+app.MapDelete("/restaurants/{id}",  /*[Authorize(Roles = "admin")]*/ [AllowAnonymous] async (Guid id, IRestaurantRepository repo) =>
 {
     await repo.Delete(id);
 
