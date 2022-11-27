@@ -94,6 +94,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+var corsOrigins = app.Configuration.GetValue<string>("CORSOrigins").Split(",");
+if (corsOrigins.Any())
+{
+    app.UseCors(builder => builder
+        .WithOrigins(corsOrigins)
+        .AllowAnyHeader()
+        .AllowAnyMethod());
+}
+
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

@@ -8,7 +8,7 @@ export default function CreateRestaurant() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const postData = () => {
-    axios.post(`https://60fbca4591156a0017b4c8a7.mockapi.io/fakeData`, {
+    axios.post(`https://localhost:5420/restaurants`, {
       name,
       address,
       phoneNumber,
