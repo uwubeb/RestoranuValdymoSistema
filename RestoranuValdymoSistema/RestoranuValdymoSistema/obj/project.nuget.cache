@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2AQym+E5eI9ipyQ3eLlVfz+ZVnu0QQUOqNB8srsTdKWIBTCGIlbiYlRllBJ+HT+AdG7uDnl75qfnGGeIu6QtxQ==",
+  "dgSpecHash": "ADpFnr+528q0GzMGEimCmn2urL0pzHx96WGjMUx+ilMCpSbglZ1vP9GBdLAqa+iWbOE/5An21W0SVTIZkfKslQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Arunas\\OneDrive - Thruster\\Documents\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema.csproj",
+  "projectFilePath": "C:\\Users\\Arunas\\source\\repos\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Arunas\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\Arunas\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",

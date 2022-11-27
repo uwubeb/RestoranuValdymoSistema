@@ -6,6 +6,11 @@ services:
     build:
       context: .
       dockerfile: RestoranuValdymoSistema/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:5420
+    ports:
+        - "5420:5420"
     depends_on:
         - postgres
   postgres: 

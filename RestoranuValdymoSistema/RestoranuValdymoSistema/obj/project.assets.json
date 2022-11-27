@@ -2424,11 +2424,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Arunas\\OneDrive - Thruster\\Documents\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema.csproj",
+      "projectUniqueName": "C:\\Users\\Arunas\\source\\repos\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema.csproj",
       "projectName": "RestoranuValdymoSistema",
-      "projectPath": "C:\\Users\\Arunas\\OneDrive - Thruster\\Documents\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema.csproj",
+      "projectPath": "C:\\Users\\Arunas\\source\\repos\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema.csproj",
       "packagesPath": "C:\\Users\\Arunas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Arunas\\OneDrive - Thruster\\Documents\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\obj\\",
+      "outputPath": "C:\\Users\\Arunas\\source\\repos\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\RestoranuValdymoSistema\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -2534,7 +2534,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

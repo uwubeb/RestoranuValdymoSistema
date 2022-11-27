@@ -1,4 +1,4 @@
-name: dockercompose16546061949907327290
+name: dockercompose5869687163752324456
 services:
   postgres:
     environment:
@@ -20,7 +20,7 @@ services:
       volume: {}
   restoranuvaldymosistema:
     build:
-      context: C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema
+      context: C:\Users\Arunas\source\repos\RestoranuValdymoSistema\RestoranuValdymoSistema
       dockerfile: RestoranuValdymoSistema/Dockerfile
     depends_on:
       postgres:
@@ -53,7 +53,7 @@ services:
         create_host_path: true
 networks:
   default:
-    name: dockercompose16546061949907327290_default
+    name: dockercompose5869687163752324456_default
 volumes:
   postgres:
-    name: dockercompose16546061949907327290_postgres
+    name: dockercompose5869687163752324456_postgres

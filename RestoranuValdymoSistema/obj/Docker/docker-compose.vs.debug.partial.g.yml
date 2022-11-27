@@ -14,8 +14,8 @@ services:
       - ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS=true
       - NUGET_FALLBACK_PACKAGES=/root/.nuget/fallbackpackages
     volumes:
-      - C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema:/app
-      - C:\Users\Arunas\OneDrive - Thruster\Documents\RestoranuValdymoSistema\RestoranuValdymoSistema:/src
+      - C:\Users\Arunas\source\repos\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema:/app
+      - C:\Users\Arunas\source\repos\RestoranuValdymoSistema\RestoranuValdymoSistema:/src
       - C:\Users\Arunas\vsdbg\vs2017u5:/remote_debugger:rw
       - C:\Users\Arunas\.nuget\packages\:/root/.nuget/packages:ro
       - C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages:/root/.nuget/fallbackpackages:ro
