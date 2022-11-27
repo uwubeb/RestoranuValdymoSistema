@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'semantic-ui-react';
+import { useNavigate } from 'react-router';
 import axios from 'axios';
 
 export default function CreateRestaurant() {
@@ -7,13 +8,19 @@ export default function CreateRestaurant() {
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
+
+  let navigate = useNavigate();
   const postData = () => {
-    axios.post(`https://localhost:5420/restaurants`, {
-      name,
-      address,
-      phoneNumber,
-      email,
-    });
+    axios
+      .post(`https://localhost:5420/restaurants`, {
+        name,
+        address,
+        phoneNumber,
+        email,
+      })
+      .then((response) => {
+        navigate('/list');
+      });
   };
 
   return (

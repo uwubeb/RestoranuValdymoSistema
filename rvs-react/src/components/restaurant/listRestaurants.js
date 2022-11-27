@@ -11,7 +11,18 @@ export default function ListRestaurants() {
       setRestaurants(response.data);
     });
   }, []);
-
+  const getData = () => {
+    axios.get(`https://localhost:5420/restaurants`).then((response) => {
+      setRestaurants(response.data);
+    });
+  };
+  const deleteRestaurant = (id) => {
+    axios
+      .delete(`https://localhost:5420/restaurants/${id}`)
+      .then((response) => {
+        getData();
+      });
+  };
   return (
     <div>
       <Table singleLine>
@@ -37,16 +48,14 @@ export default function ListRestaurants() {
               <Table.Cell>{restaurant.email}</Table.Cell>
               <Link to={`/update/${restaurant.id}`}>
                 <Table.Cell>
-                  {' '}
-                  <Button>Update</Button>{' '}
+                  <Button>Update</Button>
                 </Table.Cell>
               </Link>
-              <Link to={`/delete/${restaurant.id}`}>
-                <Table.Cell>
-                  {' '}
-                  <Button>Delete</Button>{' '}
-                </Table.Cell>
-              </Link>
+              <Table.Cell>
+                <Button onClick={() => deleteRestaurant(restaurant.id)}>
+                  Delete
+                </Button>
+              </Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>

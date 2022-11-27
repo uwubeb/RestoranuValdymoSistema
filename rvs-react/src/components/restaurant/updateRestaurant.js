@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Button, Form } from 'semantic-ui-react';
@@ -10,6 +10,9 @@ export default function UpdateRestaurant() {
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
+
+  let navigate = useNavigate();
+
   useEffect(() => {
     axios.get(`https://localhost:5420/restaurants/${id}`).then((response) => {
       setName(response.data.name);
@@ -20,13 +23,17 @@ export default function UpdateRestaurant() {
   }, [id]);
 
   const updateData = () => {
-    axios.put(`https://localhost:5420/restaurants`, {
-      id,
-      name,
-      address,
-      phoneNumber,
-      email,
-    });
+    axios
+      .put(`https://localhost:5420/restaurants`, {
+        id,
+        name,
+        address,
+        phoneNumber,
+        email,
+      })
+      .then((response) => {
+        navigate('/list');
+      });
   };
 
   return (
