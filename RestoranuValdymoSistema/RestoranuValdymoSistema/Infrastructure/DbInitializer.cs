@@ -22,7 +22,7 @@ namespace RestoranuValdymoSistema.Infrastructure
                 .RuleFor(r => r.PhoneNumber, f => f.Phone.PhoneNumber())
                 .RuleFor(r => r.Email, f => f.Internet.Email());
 
-            Restaurants = restaurantFaker.Generate(50);
+            Restaurants = restaurantFaker.Generate(5);
 
             Faker<Order> orderFaker = new Faker<Order>()
                 .StrictMode(false)
@@ -35,7 +35,7 @@ namespace RestoranuValdymoSistema.Infrastructure
                 .RuleFor(o => o.Price, f => f.Random.Decimal(1, 100))
                 .RuleFor(o => o.RestaurantId, f => f.PickRandom(Restaurants).Id);
 
-            Orders = orderFaker.Generate(200);
+            Orders = orderFaker.Generate(50);
 
             Faker<Employee> employeeFaker = new Faker<Employee>()
                 .StrictMode(false)
@@ -49,7 +49,7 @@ namespace RestoranuValdymoSistema.Infrastructure
                 .RuleFor(e => e.PhoneNumber, f => f.Phone.PhoneNumber())
                 .RuleFor(e => e.RestaurantId, f => f.PickRandom(Restaurants).Id);
 
-            Employees = employeeFaker.Generate(200);
+            Employees = employeeFaker.Generate(30);
 
             Faker<Note> noteFaker = new Faker<Note>()
                 .StrictMode(false)
@@ -59,7 +59,7 @@ namespace RestoranuValdymoSistema.Infrastructure
                 .RuleFor(n => n.Text, f => f.Lorem.Sentence())
                 .RuleFor(n => n.OrderId, f => f.PickRandom(Orders).Id);
 
-            Notes = noteFaker.Generate(400);
+            Notes = noteFaker.Generate(200);
 
 
 
