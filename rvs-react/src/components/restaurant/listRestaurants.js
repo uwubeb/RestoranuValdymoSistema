@@ -3,10 +3,11 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function ListRestaurants() {
   const [restaurants, setRestaurants] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     axios.get(`https://localhost:5420/restaurants`).then((response) => {
       setRestaurants(response.data);
@@ -24,6 +25,11 @@ export default function ListRestaurants() {
         getData();
       });
   };
+
+  const viewRestaurant = (id) => {
+    navigate(`/restaurants/${id}`);
+  };
+
   return (
     <div>
       <div className="m-3">
@@ -47,7 +53,10 @@ export default function ListRestaurants() {
 
         <tbody>
           {restaurants.map((restaurant) => (
-            <tr key={restaurant.id}>
+            <tr
+              onClick={() => viewRestaurant(restaurant.id)}
+              key={restaurant.id}
+            >
               <td>{restaurant.id}</td>
               <td>{restaurant.name}</td>
               <td>{restaurant.address}</td>
