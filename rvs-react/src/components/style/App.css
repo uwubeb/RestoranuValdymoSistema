@@ -1,21 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Mukta&display=swap');
+/* 
+.navbar {
+  background-color: gray;
+  color: #fff;
+  font-family: 'Mukta', sans-serif;
+} */
 
 .main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #212121;
-  color: whitesmoke;
-  flex-direction: column;
-}
-
-.main-header {
+  background-color: darkseagreen;
+  color: black;
   font-family: 'Mukta', sans-serif;
-}
-
-.create-form label {
-  color: whitesmoke !important;
-  font-family: 'Mukta', sans-serif;
-  font-size: 12px !important;
 }

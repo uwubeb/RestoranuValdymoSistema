@@ -1,5 +1,6 @@
 import React from 'react';
-import { Table, Button } from 'semantic-ui-react';
+import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -25,40 +26,49 @@ export default function ListRestaurants() {
   };
   return (
     <div>
-      <Table singleLine>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Id</Table.HeaderCell>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell>Address</Table.HeaderCell>
-            <Table.HeaderCell>Phone Number</Table.HeaderCell>
-            <Table.HeaderCell>Email</Table.HeaderCell>
-            <Table.HeaderCell>Update</Table.HeaderCell>
-            <Table.HeaderCell>Delete</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
+      <div className="mt-3 mb-3">
+        <h1 className="text-center">Restaurants</h1>
+        <Link to="/restaurants/create">
+          <Button variant="success">Create</Button>
+        </Link>
+      </div>
+      <Table responsive="lg" striped bordered hover variant="dark">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
 
-        <Table.Body>
+        <tbody>
           {restaurants.map((restaurant) => (
-            <Table.Row key={restaurant.id}>
-              <Table.Cell>{restaurant.id}</Table.Cell>
-              <Table.Cell>{restaurant.name}</Table.Cell>
-              <Table.Cell>{restaurant.address}</Table.Cell>
-              <Table.Cell>{restaurant.phoneNumber}</Table.Cell>
-              <Table.Cell>{restaurant.email}</Table.Cell>
-              <Link to={`/update/${restaurant.id}`}>
-                <Table.Cell>
-                  <Button>Update</Button>
-                </Table.Cell>
-              </Link>
-              <Table.Cell>
-                <Button onClick={() => deleteRestaurant(restaurant.id)}>
+            <tr key={restaurant.id}>
+              <td>{restaurant.id}</td>
+              <td>{restaurant.name}</td>
+              <td>{restaurant.address}</td>
+              <td>{restaurant.phoneNumber}</td>
+              <td>{restaurant.email}</td>
+              <td>
+                <Link to={`/restaurants/update/${restaurant.id}`}>
+                  <Button variant="warning">Update</Button>
+                </Link>
+              </td>
+              <td>
+                <Button
+                  variant="danger"
+                  onClick={() => deleteRestaurant(restaurant.id)}
+                >
                   Delete
                 </Button>
-              </Table.Cell>
-            </Table.Row>
+              </td>
+            </tr>
           ))}
-        </Table.Body>
+        </tbody>
       </Table>
     </div>
   );

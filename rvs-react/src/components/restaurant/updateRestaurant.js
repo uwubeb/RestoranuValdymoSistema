@@ -32,7 +32,7 @@ export default function UpdateRestaurant() {
         email,
       })
       .then((response) => {
-        navigate('/list');
+        navigate('/restaurants');
       });
   };
 

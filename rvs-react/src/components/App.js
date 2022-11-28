@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import RVSNavbar from './navbar/rvsNavbar';
 import CreateRestaurant from './restaurant/createRestaurant';
 import ListRestaurants from './restaurant/listRestaurants';
 import UpdateRestaurant from './restaurant/updateRestaurant';
@@ -8,13 +9,21 @@ function App() {
   return (
     <Router>
       <div className="main">
-        <h2 className="main-header">Restoranų valdymo sistema</h2>
+        <RVSNavbar></RVSNavbar>
         <div>
           <Routes>
-            <Route exact path="/create" element={<CreateRestaurant />} />
-            <Route exact path="/list" element={<ListRestaurants />} />
+            <Route
+              exact
+              path="/restaurants/create"
+              element={<CreateRestaurant />}
+            />
+            <Route exact path="/restaurants" element={<ListRestaurants />} />
 
-            <Route exact path="/update/:id" element={<UpdateRestaurant />} />
+            <Route
+              exact
+              path="/restaurants/update/:id"
+              element={<UpdateRestaurant />}
+            />
           </Routes>
         </div>
       </div>

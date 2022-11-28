@@ -19,7 +19,7 @@ export default function CreateRestaurant() {
         email,
       })
       .then((response) => {
-        navigate('/list');
+        navigate('/restaurants');
       });
   };
 
