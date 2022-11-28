@@ -6,7 +6,14 @@
   font-family: 'Mukta', sans-serif;
 } */
 
-.main {
+.create-form {
+  display: flex;
+  width: 100%;
+  max-width: 60%;
+  margin: 0 auto;
+  justify-content: center;
+}
+body {
   background-color: darkseagreen;
   color: black;
   font-family: 'Mukta', sans-serif;

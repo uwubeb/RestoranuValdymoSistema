@@ -3,12 +3,12 @@ import RVSNavbar from './navbar/rvsNavbar';
 import CreateRestaurant from './restaurant/createRestaurant';
 import ListRestaurants from './restaurant/listRestaurants';
 import UpdateRestaurant from './restaurant/updateRestaurant';
-import './style/App.css';
+import '../index.css';
 
 function App() {
   return (
     <Router>
-      <div className="main">
+      <div>
         <RVSNavbar></RVSNavbar>
         <div>
           <Routes>

@@ -26,7 +26,7 @@ export default function ListRestaurants() {
   };
   return (
     <div>
-      <div className="mt-3 mb-3">
+      <div className="m-3">
         <h1 className="text-center">Restaurants</h1>
         <Link to="/restaurants/create">
           <Button variant="success">Create</Button>
