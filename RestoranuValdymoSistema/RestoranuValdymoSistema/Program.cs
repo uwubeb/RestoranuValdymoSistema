@@ -150,7 +150,7 @@ app.MapDelete("/restaurants/{id}",  /*[Authorize(Roles = "admin")]*/ [AllowAnony
 });
 
 // Orders
-app.MapGet("/restaurants/{restaurantId}/orders", [Authorize(Roles = "user, admin")]
+app.MapGet("/restaurants/{restaurantId}/orders", /*[Authorize(Roles = "user, admin")]*/ [AllowAnonymous]
 async (IOrderRepository repo, Guid restaurantId, IMapper mapper) =>
 {
     var orders = await repo.Get(restaurantId);

@@ -18,3 +18,17 @@ body {
   color: black;
   font-family: 'Mukta', sans-serif;
 }
+
+.restaurant-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 60%;
+  margin: 0 auto;
+  background-color: darkgray;
+  padding: 1rem;
+  border-radius: 5px;
+  border-color: black;
+  border-style: solid;
+}
