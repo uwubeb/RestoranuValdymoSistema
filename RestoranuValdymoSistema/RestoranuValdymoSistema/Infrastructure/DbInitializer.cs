@@ -1,12 +1,15 @@
 ﻿using Bogus;
+using RestoranuValdymoSistema.Data.Contracts.User;
 using RestoranuValdymoSistema.Data.Models;
+using RestoranuValdymoSistema.Services;
 
 namespace RestoranuValdymoSistema.Infrastructure
 {
     public class DbInitializer
     {
+        private readonly IAuthService _authService;
         public List<Restaurant> Restaurants { get; set; }
-        public List<Employee> Employees { get; set; }
+        public List<CreateUserRequest> UserRequests { get; set; }
         public List<Order> Orders { get; set; }
         public List<Note> Notes { get; set; }
 
@@ -37,19 +40,19 @@ namespace RestoranuValdymoSistema.Infrastructure
 
             Orders = orderFaker.Generate(50);
 
-            Faker<Employee> employeeFaker = new Faker<Employee>()
-                .StrictMode(false)
-                .UseSeed(3)
-                .RuleFor(r => r.Id, f => Guid.NewGuid())
-                .RuleFor(r => r.CreationDate, f => DateTime.UtcNow)
-                .RuleFor(e => e.Name, f => f.Name.FirstName())
-                .RuleFor(e => e.Surname, f => f.Name.LastName())
-                .RuleFor(e => e.Role, f => f.PickRandom("Waiter", "Cook", "Manager"))
-                .RuleFor(e => e.Email, f => f.Internet.Email())
-                .RuleFor(e => e.PhoneNumber, f => f.Phone.PhoneNumber())
-                .RuleFor(e => e.RestaurantId, f => f.PickRandom(Restaurants).Id);
+            //Faker<CreateUserRequest> userFaker = new Faker<CreateUserRequest>()
+            //    .StrictMode(false)
+            //    .UseSeed(3)
+            //    .RuleFor(e => e.Name, f => f.Name.FirstName())
+            //    .RuleFor(e => e.Surname, f => f.Name.LastName())
+            //    .RuleFor(e => e.Role, f => f.PickRandom("admin", "user"))
+            //    .RuleFor(e => e.Email, f => f.Internet.Email())
+            //    .RuleFor(e => e.PhoneNumber, f => f.Phone.PhoneNumber())
+            //    .RuleFor(e => e.RestaurantIds, f => f.PickRandom(Restaurants, 3).Select(r => r.Id).ToList());
 
-            Employees = employeeFaker.Generate(30);
+            ////Users = userFaker.Generate(30);
+            //UserRequests = userFaker.Generate(30);
+
 
             Faker<Note> noteFaker = new Faker<Note>()
                 .StrictMode(false)

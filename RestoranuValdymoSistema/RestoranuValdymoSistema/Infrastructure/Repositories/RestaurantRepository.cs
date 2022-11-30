@@ -23,6 +23,11 @@ public class RestaurantRepository : BaseRepository<Restaurant>, IRestaurantRepos
         return await DbContext.Restaurants.FirstOrDefaultAsync(r => r.Id == restaurantId) ?? throw new NotFoundException(ExceptionConstants.NotFound<Restaurant>(restaurantId));
     }
 
+    public async Task<List<Restaurant>> GetByUserId(Guid userId)
+    {
+        return await DbContext.Restaurants.Where(r => r.Users.Any(u => u.Id == userId)).ToListAsync();
+    }
+
     public new async Task Create(Restaurant restaurant)
     {
         await DbContext.Restaurants.AddAsync(restaurant);
@@ -53,6 +58,7 @@ public interface IRestaurantRepository
 {
     Task<List<Restaurant>> Get();
     Task<Restaurant> Get(Guid restaurantId);
+    Task<List<Restaurant>> GetByUserId(Guid userId);
     Task Create(Restaurant restaurant);
     Task Update(Restaurant restaurantToUpdate);
     Task Delete(Guid restaurantId);

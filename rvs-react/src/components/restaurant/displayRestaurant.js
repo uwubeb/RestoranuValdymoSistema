@@ -36,12 +36,11 @@ export default function DisplayRestaurant() {
         <p>{restaurant.phoneNumber}</p>
         <p>{restaurant.email}</p>
       </div>
-      <div className="restaurant-details mt-3">
+      <div className="restaurant-orders mt-3 table-responsive">
         <h1>Orders</h1>
-        <Table striped bordered hover>
+        <Table responsive striped bordered hover variant="dark">
           <thead>
             <tr>
-              <th>Id</th>
               <th>Item</th>
               <th>Description</th>
               <th>Quantity</th>
@@ -51,7 +50,6 @@ export default function DisplayRestaurant() {
           <tbody>
             {orders?.map((order) => (
               <tr key={order.id}>
-                <td>{order.id}</td>
                 <td>{order.item}</td>
                 <td>{order.description}</td>
                 <td>{order.quantity}</td>

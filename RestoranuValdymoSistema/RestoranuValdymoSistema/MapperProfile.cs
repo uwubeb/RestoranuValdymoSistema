@@ -17,11 +17,11 @@ public class MapperProfile : Profile
         CreateMap<CreateRestaurantContract, Restaurant>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.Orders, opt => opt.Ignore())
-            .ForMember(dest => dest.Employees, opt => opt.Ignore());
+            .ForMember(dest => dest.Users, opt => opt.Ignore());
         
         CreateMap<UpdateRestaurantContract, Restaurant>()
             .ForMember(dest => dest.Orders, opt => opt.Ignore())
-            .ForMember(dest => dest.Employees, opt => opt.Ignore());
+            .ForMember(dest => dest.Users, opt => opt.Ignore());
 
 
         CreateMap<Order, OrderContract>()
@@ -48,6 +48,7 @@ public class MapperProfile : Profile
             .ForMember(dest => dest.OrderId, opt => opt.Ignore());
 
 
-        CreateMap<User, UserContract>();
+        CreateMap<User, UserContract>()
+            .ForMember(dest => dest.RestaurantIds, opt => opt.MapFrom(src => src.Restaurants.Select(r => r.Id)));
     }
 }

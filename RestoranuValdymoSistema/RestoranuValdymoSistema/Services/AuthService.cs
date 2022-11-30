@@ -14,12 +14,14 @@ namespace RestoranuValdymoSistema.Services;
 public class AuthService : IAuthService
 {
     private readonly IRepository<User> _userRepository;
+    private readonly IRestaurantRepository _restaurantRepository;
     private readonly IConfiguration _configuration;
 
-    public AuthService(IRepository<User> userRepository, IConfiguration configuration)
+    public AuthService(IRepository<User> userRepository, IConfiguration configuration, IRestaurantRepository restaurantRepository)
     {
         _userRepository = userRepository;
         _configuration = configuration;
+        _restaurantRepository = restaurantRepository;
     }
 
 
@@ -27,7 +29,7 @@ public class AuthService : IAuthService
     {
         CreatePasswordHash(request.Password, out var passwordHash, out var passwordSalt);
 
-        if (request.Role.ToLower() != RolesConstants.Admin && request.Role.ToLower() != RolesConstants.User && request.Role.ToLower() != RolesConstants.Guest)
+        if (request.Role.ToLower() != RolesConstants.SuperAdmin && request.Role.ToLower() != RolesConstants.Admin && request.Role.ToLower() != RolesConstants.User && request.Role.ToLower() != RolesConstants.Guest)
         {
             throw new AppException(ExceptionConstants.InvalidRole);
         }
@@ -36,8 +38,23 @@ public class AuthService : IAuthService
             Username = request.Username,
             PasswordHash = passwordHash,
             PasswordSalt = passwordSalt,
-            Role = request.Role.ToLower()
+            Role = request.Role.ToLower(),
+            Name = request.Name,
+            Surname = request.Surname,
+            Email = request.Email,
+            PhoneNumber = request.PhoneNumber,
+            Restaurants = new List<Restaurant>()
         };
+
+        // add restaurants to user
+        if (request.RestaurantIds.Any())
+        {
+            foreach (var restaurantId in request.RestaurantIds)
+            {
+                var restaurant = await _restaurantRepository.Get(restaurantId);
+                user.Restaurants.ToList().Add(restaurant);
+            }
+        }
 
         if (await _userRepository.Exists(x => x.Username == user.Username))
             throw new AppException("User already exists");
@@ -76,6 +93,7 @@ public class AuthService : IAuthService
         List<Claim> claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, user.Username),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Role, user.Role)
         };
 

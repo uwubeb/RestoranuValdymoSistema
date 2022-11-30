@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Text;
 using System.Text.Json.Serialization;
 using AutoMapper;
@@ -16,6 +17,7 @@ using RestoranuValdymoSistema.Data.Contracts.Order;
 using RestoranuValdymoSistema.Data.Contracts.Restaurant;
 using RestoranuValdymoSistema.Data.Contracts.User;
 using RestoranuValdymoSistema.Data.Models;
+using RestoranuValdymoSistema.Infrastructure;
 using RestoranuValdymoSistema.Infrastructure.Repositories;
 using RestoranuValdymoSistema.Middleware;
 using RestoranuValdymoSistema.Services;
@@ -62,7 +64,8 @@ builder.Services
     .AddScoped<INoteRepository, NoteRepository>()
     .AddScoped<IOrderRepository, OrderRepository>()
     .AddScoped<IRestaurantRepository, RestaurantRepository>()
-    .AddScoped<IAuthService, AuthService>();
+    .AddScoped<IAuthService, AuthService>()
+    .AddHttpContextAccessor();
 
 var connectionStringKey = "DefaultConnection";
 var connectionString = builder.Configuration.GetConnectionString(connectionStringKey);
@@ -111,14 +114,25 @@ app.UseMiddleware<ErrorHandlerMiddleware>();
 
 
 // Restaurants
-app.MapGet("/restaurants", /*[Authorize(Roles = "user, admin")]*/ [AllowAnonymous] async (IRestaurantRepository repo, IMapper mapper) =>
+app.MapGet("/restaurants", /*[Authorize(Roles = "user, admin")]*/ [AllowAnonymous] async (IRestaurantRepository repo, IMapper mapper, IHttpContextAccessor context) =>
 {
-    List<RestaurantContract> restaurantContracts = mapper.Map<List<RestaurantContract>>(await repo.Get());
+    var userClaims = context.HttpContext.User.Claims;
+    List<RestaurantContract> restaurantContracts;
+    if (userClaims.First(x => x.Type == ClaimTypes.Role).Value == "superadmin")
+    {
+        restaurantContracts = mapper.Map<List<RestaurantContract>>(await repo.Get());
+        return Results.Ok(restaurantContracts);
+    }
+
+    var userId = userClaims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
+    restaurantContracts = mapper.Map<List<RestaurantContract>>(await repo.GetByUserId(Guid.Parse(userId)));
     return Results.Ok(restaurantContracts);
 });
 
 app.MapGet("/restaurants/{id}",  /*[Authorize(Roles = "user, admin")]*/ [AllowAnonymous] async (Guid id, IRestaurantRepository repo, IMapper mapper) =>
 {
+    // check role from token
+    
     var restaurant = await repo.Get(id);
     var restaurantContract = mapper.Map<RestaurantContract>(restaurant);
     return Results.Ok(restaurantContract);
