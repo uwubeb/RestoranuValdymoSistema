@@ -20,7 +20,7 @@ export default function CreateRestaurant() {
       event.preventDefault();
       event.stopPropagation();
     }
-
+    postData();
     setValidated(true);
   };
 
@@ -40,7 +40,7 @@ export default function CreateRestaurant() {
 
   return (
     <Container className="create-form ">
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
+      <Form validated={validated} onSubmit={handleSubmit}>
         <Form.Group controlId="validationCustom01" className="mt-3">
           <Form.Label>Name</Form.Label>
           <Form.Control

@@ -32,3 +32,10 @@ body {
   border-color: black;
   border-style: solid;
 }
+
+.restaurant-buttons {
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
+}
