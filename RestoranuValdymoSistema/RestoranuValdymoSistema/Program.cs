@@ -252,7 +252,7 @@ app.MapGet("/users", [Authorize(Roles = "admin")] async (IRepository<User> repo)
     return Results.Ok(users);
 });
 
-app.MapPost("/login", [AllowAnonymous] async (UserContract request, IAuthService authService) =>
+app.MapPost("/login", [AllowAnonymous] async (LoginRequest request, IAuthService authService) =>
 {
     var jwt = await authService.Login(request);
     return Results.Ok(jwt);

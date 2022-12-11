@@ -63,7 +63,7 @@ public class AuthService : IAuthService
         return user; 
     }
 
-    public async Task<string> Login(UserContract request)
+    public async Task<string> Login(LoginRequest request)
     {
         var user = (await _userRepository.GetWhere(x => x.Username == request.Username))
                    .FirstOrDefault() 
@@ -116,5 +116,5 @@ public class AuthService : IAuthService
 public interface IAuthService
 {
     public Task<User> Register(CreateUserRequest request);
-    public Task<string> Login(UserContract request);
+    public Task<string> Login(LoginRequest request);
 }
