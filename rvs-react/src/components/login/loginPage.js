@@ -19,8 +19,7 @@ function LoginForm() {
       .post('https://localhost:5420/login', loginPayload)
       .then((response) => {
         //get token from response
-        const token = response.data.token;
-
+        const token = response.data;
         //set JWT token to local
         localStorage.setItem('token', token);
 

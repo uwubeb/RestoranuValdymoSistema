@@ -16,6 +16,7 @@ import { history } from './helpers/history';
 import { Guard } from './routeGuard/RouteGuard';
 import LoginForm from './login/loginPage';
 import { setAuthToken } from './helpers/setAuthToken';
+import RegistrationForm from './register/registrationPage';
 
 function App() {
   //check jwt token
@@ -55,6 +56,7 @@ function App() {
               />
             </Route>
             <Route exact path="/login" element={<LoginForm />} />
+            <Route exact path="register" element={<RegistrationForm />} />
           </Routes>
         </div>
       </div>
