@@ -6,12 +6,12 @@ import Modal from 'react-bootstrap/Modal';
 import { Container, Table, Row } from 'react-bootstrap';
 import '../style/App.css';
 
-export default function DisplayRestaurant() {
-  const [restaurant, setRestaurant] = useState({});
-  const [orders, setOrders] = useState([]);
+export default function DisplayOrder() {
+  const [order, setOrder] = useState({});
+  const [notes, setNotes] = useState([]);
   const [showDelete, setShowDelete] = useState(false);
 
-  const { id } = useParams();
+  const { restaurantId, orderId } = useParams();
 
   const navigate = useNavigate();
 
@@ -19,32 +19,38 @@ export default function DisplayRestaurant() {
   const handleCloseDelete = () => setShowDelete(false);
   const handleDelete = () => {
     axios.set
-      .delete(`https://localhost:5420/restaurants/${id}`)
+      .delete(
+        `https://localhost:5420/restaurants/${restaurantId}/orders/${orderId}`
+      )
       .then((response) => {
         navigate('/restaurants');
       });
   };
-  const getRestaurant = (id) => {
-    axios.get(`https://localhost:5420/restaurants/${id}`).then((response) => {
-      setRestaurant(response.data);
-    });
-  };
-
-  const getOrders = (id) => {
+  const getOrder = (restaurantId, orderId) => {
     axios
-      .get(`https://localhost:5420/restaurants/${id}/orders`)
+      .get(
+        `https://localhost:5420/restaurants/${restaurantId}/orders/${orderId}`
+      )
       .then((response) => {
-        setOrders(response.data);
+        setOrder(response.data);
       });
   };
+
+  const getNotes = (restaurantId, orderId) => {
+    axios
+      .get(
+        `https://localhost:5420/restaurants/${restaurantId}/orders/${orderId}/notes`
+      )
+      .then((response) => {
+        setNotes(response.data);
+      });
+  };
+
   useEffect(() => {
-    getRestaurant(id);
-    getOrders(id);
+    getOrder(restaurantId, orderId);
+    getNotes(restaurantId, orderId);
   }, []);
 
-  const viewOrder = (orderId) => {
-    navigate(`/restaurants/${id}/orders/${orderId}`);
-  };
   return (
     <Container className="mt-3">
       <Modal show={showDelete} onHide={handleCloseDelete}>
@@ -52,7 +58,7 @@ export default function DisplayRestaurant() {
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you sure you want to delete restaurant {restaurant.name}{' '}
+          Are you sure you want to delete order {order.name}{' '}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseDelete}>
@@ -64,42 +70,38 @@ export default function DisplayRestaurant() {
         </Modal.Footer>
       </Modal>
       <div className="restaurant-details">
-        <h1>Restaurant</h1>
-        <p>{restaurant.name}</p>
-        <p>{restaurant.address}</p>
-        <p>{restaurant.phoneNumber}</p>
-        <p>{restaurant.email}</p>
+        <h1>Order</h1>
+        <p>{order.item}</p>
+        <p>{order.description}</p>
+        <p>{order.quantity}</p>
+        <p>{order.price}</p>
         <div className="restaurant-buttons">
           <Button
             variant="primary"
-            onClick={() => navigate(`/restaurants/update/${id}`)}
+            onClick={() =>
+              navigate(`/restaurants/${restaurantId}/update/${orderId}`)
+            }
           >
             Edit
           </Button>
-          <Button variant="danger" onClick={() => handleShowDelete(id)}>
+          <Button variant="danger" onClick={() => handleShowDelete()}>
             Delete
           </Button>
         </div>
       </div>
 
       <div className="restaurant-orders mt-3 table-responsive">
-        <h1>Orders</h1>
+        <h1>Notes</h1>
         <Table responsive striped bordered hover variant="dark">
           <thead>
             <tr>
-              <th>Item</th>
-              <th>Description</th>
-              <th>Quantity</th>
-              <th>Price</th>
+              <th>Text</th>
             </tr>
           </thead>
           <tbody>
-            {orders?.map((order) => (
-              <tr onClick={() => viewOrder(order.id)} key={order.id}>
-                <td>{order.item}</td>
-                <td>{order.description}</td>
-                <td>{order.quantity}</td>
-                <td>{order.price}</td>
+            {notes?.map((note) => (
+              <tr key={note.id}>
+                <td>{note.text}</td>
               </tr>
             ))}
           </tbody>

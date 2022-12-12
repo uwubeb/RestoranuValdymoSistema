@@ -46,8 +46,6 @@ export default function ListRestaurants() {
             <th>Address</th>
             <th>Phone Number</th>
             <th>Email</th>
-            <th>Update</th>
-            <th>Delete</th>
           </tr>
         </thead>
 
@@ -62,19 +60,6 @@ export default function ListRestaurants() {
               <td>{restaurant.address}</td>
               <td>{restaurant.phoneNumber}</td>
               <td>{restaurant.email}</td>
-              <td>
-                <Link to={`/restaurants/update/${restaurant.id}`}>
-                  <Button variant="warning">Update</Button>
-                </Link>
-              </td>
-              <td>
-                <Button
-                  variant="danger"
-                  onClick={() => deleteRestaurant(restaurant.id)}
-                >
-                  Delete
-                </Button>
-              </td>
             </tr>
           ))}
         </tbody>
