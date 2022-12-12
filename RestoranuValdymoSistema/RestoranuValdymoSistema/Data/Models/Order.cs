@@ -10,5 +10,5 @@ public class Order : BaseEntity
     public decimal Price { get; set; }
     public Guid RestaurantId { get; set; }
     public Restaurant Restaurant { get; set; }
-    public IEnumerable<Note> Notes { get; set; }
+    public List<Note> Notes { get; set; }
 }

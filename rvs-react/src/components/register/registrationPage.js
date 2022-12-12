@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Row, Col, Spinner } from 'react-bootstrap';
 
@@ -8,7 +9,7 @@ function RegistrationForm() {
   useEffect(() => {
     // Use the fetch API to get the items from the API endpoint
     setIsLoading(true);
-    fetch('https://localhost:5420/restaurants')
+    fetch('https://localhost:5420/restaurantList')
       .then((response) => response.json())
       .then((data) => {
         setItems(data);
@@ -21,6 +22,48 @@ function RegistrationForm() {
       });
   }, []);
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const username = formData.get('username');
+    const password = formData.get('password');
+    const role = formData.get('role');
+    const name = formData.get('name');
+    const surname = formData.get('surname');
+    const email = formData.get('email');
+    const phoneNumber = formData.get('phoneNumber');
+    // const restaurantIds = formData.get('restaurantIds');
+    // get checked restaurant ids
+    const restaurantIds = [];
+    const checkboxes = document.querySelectorAll(
+      'input[type=checkbox]:checked'
+    );
+    checkboxes.forEach((checkbox) => {
+      restaurantIds.push(checkbox.value);
+    });
+
+    console.log(restaurantIds);
+
+    const registerRequest = {
+      username,
+      password,
+      role,
+      name,
+      surname,
+      email,
+      phoneNumber,
+      restaurantIds,
+    };
+
+    axios
+      .post('https://localhost:5420/register', registerRequest)
+      .then((response) => {
+        //redirect user to home page
+        window.location.href = '/login';
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div>
       <Container className="create-form ">
@@ -32,7 +75,7 @@ function RegistrationForm() {
                 <span className="sr-only">Loading...</span>
               </Spinner>
             ) : (
-              <Form>
+              <Form onSubmit={handleSubmit}>
                 <Form.Group>
                   <Form.Label>Username</Form.Label>
                   <Form.Control
@@ -56,6 +99,7 @@ function RegistrationForm() {
                   <Form.Control as="select" name="role">
                     <option value="user">User</option>
                     <option value="admin">Admin</option>
+                    <option value="superadmin">Superadmin</option>
                   </Form.Control>
                 </Form.Group>
                 <Form.Group>
@@ -63,7 +107,7 @@ function RegistrationForm() {
                   <Form.Control
                     required
                     name="name"
-                    type="firstName"
+                    type="text"
                     placeholder="Enter first name"
                   />
                 </Form.Group>
@@ -71,8 +115,8 @@ function RegistrationForm() {
                   <Form.Label>Last name</Form.Label>
                   <Form.Control
                     required
-                    name="lastName"
-                    type="lastName"
+                    name="surname"
+                    type="text"
                     placeholder="Enter last name"
                   />
                 </Form.Group>
@@ -89,9 +133,9 @@ function RegistrationForm() {
                   <Form.Label>Phone</Form.Label>
                   <Form.Control
                     required
-                    name="phone"
+                    name="phoneNumber"
                     type="phone"
-                    placeholder="Enter phone"
+                    placeholder="Enter phone number"
                   />
                 </Form.Group>
                 {items && (

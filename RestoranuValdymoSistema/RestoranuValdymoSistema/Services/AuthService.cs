@@ -45,21 +45,25 @@ public class AuthService : IAuthService
             PhoneNumber = request.PhoneNumber,
             Restaurants = new List<Restaurant>()
         };
+        
+        if (await _userRepository.Exists(x => x.Username == user.Username))
+            throw new AppException("User already exists");
 
+        await _userRepository.Create(user);
+        
         // add restaurants to user
         if (request.RestaurantIds.Any())
         {
             foreach (var restaurantId in request.RestaurantIds)
             {
                 var restaurant = await _restaurantRepository.Get(restaurantId);
-                user.Restaurants.ToList().Add(restaurant);
+                //user.Restaurants.ToList().Add(restaurant);
+                restaurant.Users.Add(user);
+               await _restaurantRepository.Update(restaurant);
             }
         }
 
-        if (await _userRepository.Exists(x => x.Username == user.Username))
-            throw new AppException("User already exists");
-
-        await _userRepository.Create(user);
+       
         return user; 
     }
 

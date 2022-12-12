@@ -116,8 +116,8 @@ app.UseMiddleware<ErrorHandlerMiddleware>();
 // Restaurants
 app.MapGet("/restaurants", [AllowAnonymous] async (IRestaurantRepository repo, IMapper mapper, IHttpContextAccessor context) =>
 {
-    //var userClaims = context.HttpContext.User.Claims;
-    var userClaims = new List<Claim> { new Claim(ClaimTypes.Role, "superadmin") };
+    var userClaims = context.HttpContext.User.Claims;
+    //var userClaims = new List<Claim> { new Claim(ClaimTypes.Role, "superadmin") };
     List<RestaurantContract> restaurantContracts;
     if (userClaims.First(x => x.Type == ClaimTypes.Role).Value == "superadmin")
     {
@@ -127,6 +127,12 @@ app.MapGet("/restaurants", [AllowAnonymous] async (IRestaurantRepository repo, I
 
     var userId = userClaims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
     restaurantContracts = mapper.Map<List<RestaurantContract>>(await repo.GetByUserId(Guid.Parse(userId)));
+    return Results.Ok(restaurantContracts);
+});
+
+app.MapGet("/restaurantList", [AllowAnonymous] async (IRestaurantRepository repo, IMapper mapper) =>
+{
+    var restaurantContracts = mapper.Map<List<RestaurantContract>>(await repo.Get());
     return Results.Ok(restaurantContracts);
 });
 

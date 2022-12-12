@@ -20,12 +20,14 @@ public class RestaurantRepository : BaseRepository<Restaurant>, IRestaurantRepos
 
     public async Task<Restaurant> Get(Guid restaurantId)
     {
-        return await DbContext.Restaurants.FirstOrDefaultAsync(r => r.Id == restaurantId) ?? throw new NotFoundException(ExceptionConstants.NotFound<Restaurant>(restaurantId));
+        return await DbContext.Restaurants.Include(x => x.Users).FirstOrDefaultAsync(r => r.Id == restaurantId) ?? throw new NotFoundException(ExceptionConstants.NotFound<Restaurant>(restaurantId));
     }
 
     public async Task<List<Restaurant>> GetByUserId(Guid userId)
     {
-        return await DbContext.Restaurants.Where(r => r.Users.Any(u => u.Id == userId)).ToListAsync();
+        var restaurants = await DbContext.Restaurants.Include(x => x.Users)
+            .Where(r => r.Users.Any(u => u.Id == userId)).ToListAsync();
+        return restaurants;
     }
 
     public new async Task Create(Restaurant restaurant)
@@ -42,6 +44,7 @@ public class RestaurantRepository : BaseRepository<Restaurant>, IRestaurantRepos
         restaurant.Address = restaurantToUpdate.Address;
         restaurant.Name = restaurantToUpdate.Name;
         restaurant.Email = restaurantToUpdate.Email;
+        restaurant.Users = restaurantToUpdate.Users;
         DbContext.Restaurants.Update(restaurant);
         await DbContext.SaveChangesAsync();
     }
