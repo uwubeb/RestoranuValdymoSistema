@@ -42,17 +42,16 @@ export default function UpdateOrder() {
   let navigate = useNavigate();
 
   const putData = () => {
-    axios
-      .put(`https://localhost:5420/restaurants/${restaurantId}/orders`, {
-        id: orderId,
-        item,
-        description,
-        quantity,
-        price,
-      })
-      .then((response) => {
-        navigate(`/restaurants/${restaurantId}`);
-      });
+    console.log('put');
+    axios.put(`https://localhost:5420/restaurants/${restaurantId}/orders`, {
+      id: orderId,
+      item,
+      description,
+      quantity,
+      price,
+    });
+    console.log(restaurantId);
+    navigate(`/restaurants/${restaurantId}`);
   };
 
   return (

@@ -27,6 +27,7 @@ export default function CreateOrder() {
   };
 
   let navigate = useNavigate();
+
   const postData = () => {
     axios
       .post(`https://localhost:5420/restaurants/${restaurantId}/orders`, {

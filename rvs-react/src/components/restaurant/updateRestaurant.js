@@ -36,17 +36,14 @@ export default function UpdateRestaurant() {
   }, [id]);
 
   const postData = () => {
-    axios
-      .put(`https://localhost:5420/restaurants`, {
-        id,
-        name,
-        address,
-        phoneNumber,
-        email,
-      })
-      .then((response) => {
-        navigate('/restaurants');
-      });
+    axios.put(`https://localhost:5420/restaurants`, {
+      id,
+      name,
+      address,
+      phoneNumber,
+      email,
+    });
+    navigate('/restaurants');
   };
 
   return (
