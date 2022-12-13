@@ -136,7 +136,7 @@ app.MapGet("/restaurantList", [AllowAnonymous] async (IRestaurantRepository repo
     return Results.Ok(restaurantContracts);
 });
 
-app.MapGet("/restaurants/{id}",  /*[Authorize(Roles = "user, admin")]*/ [AllowAnonymous] async (Guid id, IRestaurantRepository repo, IMapper mapper) =>
+app.MapGet("/restaurants/{id}", [Authorize(Roles = "user, admin, superadmin")] async (Guid id, IRestaurantRepository repo, IMapper mapper) =>
 {
     // check role from token
     
@@ -145,7 +145,7 @@ app.MapGet("/restaurants/{id}",  /*[Authorize(Roles = "user, admin")]*/ [AllowAn
     return Results.Ok(restaurantContract);
 });
 
-app.MapPost("/restaurants",  /*[Authorize(Roles = "admin")]*/ [AllowAnonymous] async (CreateRestaurantContract createRestaurantContract, IRepository<Restaurant> repo, IMapper mapper ) =>
+app.MapPost("/restaurants", [Authorize(Roles = "admin, superadmin")] async (CreateRestaurantContract createRestaurantContract, IRepository<Restaurant> repo, IMapper mapper ) =>
 {
     var restaurant = mapper.Map<Restaurant>(createRestaurantContract);
     await repo.Create(restaurant);
@@ -154,7 +154,7 @@ app.MapPost("/restaurants",  /*[Authorize(Roles = "admin")]*/ [AllowAnonymous] a
     return Results.Created($"/restaurants/{restaurantContract.Id}", restaurantContract);
 });
 
-app.MapPut("/restaurants",  /*[Authorize(Roles = "admin")]*/ [AllowAnonymous] async (UpdateRestaurantContract restaurantContract, IRestaurantRepository repo, IMapper mapper) =>
+app.MapPut("/restaurants", [Authorize(Roles = "admin, superadmin")] async (UpdateRestaurantContract restaurantContract, IRestaurantRepository repo, IMapper mapper) =>
 {
     var restaurant = mapper.Map<Restaurant>(restaurantContract);
     await repo.Update(restaurant);
@@ -162,7 +162,7 @@ app.MapPut("/restaurants",  /*[Authorize(Roles = "admin")]*/ [AllowAnonymous] as
     return Results.NoContent();
 });
 
-app.MapDelete("/restaurants/{id}",  /*[Authorize(Roles = "admin")]*/ [AllowAnonymous] async (Guid id, IRestaurantRepository repo) =>
+app.MapDelete("/restaurants/{id}", [Authorize(Roles = "admin, superadmin")] async (Guid id, IRestaurantRepository repo) =>
 {
     await repo.Delete(id);
 
@@ -171,7 +171,7 @@ app.MapDelete("/restaurants/{id}",  /*[Authorize(Roles = "admin")]*/ [AllowAnony
 });
 
 // Orders
-app.MapGet("/restaurants/{restaurantId}/orders", /*[Authorize(Roles = "user, admin")]*/ [AllowAnonymous]
+app.MapGet("/restaurants/{restaurantId}/orders", [Authorize(Roles = "user, admin, superadmin")]
 async (IOrderRepository repo, Guid restaurantId, IMapper mapper) =>
 {
     var orders = await repo.Get(restaurantId);
@@ -252,7 +252,7 @@ app.MapPost("/register", [AllowAnonymous] async (CreateUserRequest request, IAut
     return Results.Ok(user);
 });
 
-app.MapGet("/users", [Authorize(Roles = "admin")] async (IRepository<User> repo) =>
+app.MapGet("/users", [Authorize(Roles = "admin, superadmin")] async (IRepository<User> repo) =>
 {
     var users = await repo.GetAll();
     return Results.Ok(users);

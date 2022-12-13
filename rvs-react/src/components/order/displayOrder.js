@@ -46,6 +46,10 @@ export default function DisplayOrder() {
       });
   };
 
+  const viewNote = (noteId) => {
+    navigate(`/restaurants/${restaurantId}/orders/${orderId}/notes/${noteId}`);
+  };
+
   useEffect(() => {
     getOrder(restaurantId, orderId);
     getNotes(restaurantId, orderId);
@@ -55,7 +59,7 @@ export default function DisplayOrder() {
     <Container className="mt-3">
       <Modal show={showDelete} onHide={handleCloseDelete}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Delete</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           Are you sure you want to delete order {order.name}{' '}
@@ -92,6 +96,17 @@ export default function DisplayOrder() {
 
       <div className="restaurant-orders mt-3 table-responsive">
         <h1>Notes</h1>
+        <Button
+          className="mb-3"
+          variant="primary"
+          onClick={() =>
+            navigate(
+              `/restaurants/${restaurantId}/orders/${orderId}/notes/create`
+            )
+          }
+        >
+          Create order
+        </Button>
         <Table responsive striped bordered hover variant="dark">
           <thead>
             <tr>
@@ -100,7 +115,7 @@ export default function DisplayOrder() {
           </thead>
           <tbody>
             {notes?.map((note) => (
-              <tr key={note.id}>
+              <tr onClick={() => viewNote(note.id)} key={note.id}>
                 <td>{note.text}</td>
               </tr>
             ))}

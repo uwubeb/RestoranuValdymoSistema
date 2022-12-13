@@ -18,7 +18,7 @@ export default function DisplayRestaurant() {
   const handleShowDelete = () => setShowDelete(true);
   const handleCloseDelete = () => setShowDelete(false);
   const handleDelete = () => {
-    axios.set
+    axios
       .delete(`https://localhost:5420/restaurants/${id}`)
       .then((response) => {
         navigate('/restaurants');
