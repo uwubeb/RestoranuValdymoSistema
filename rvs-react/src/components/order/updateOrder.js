@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useNavigate, useParams } from 'react-router';
@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Container } from 'react-bootstrap';
 import '../style/App.css';
 
-export default function CreateOrder() {
+export default function UpdateOrder() {
   const [item, setItem] = useState('');
   const [description, setDescription] = useState('');
   const [quantity, setQuantity] = useState(0);
@@ -14,7 +14,20 @@ export default function CreateOrder() {
 
   const [validated, setValidated] = useState(false);
 
-  const { restaurantId } = useParams();
+  const { restaurantId, orderId } = useParams();
+
+  useEffect(() => {
+    axios
+      .get(
+        `https://localhost:5420/restaurants/${restaurantId}/orders/${orderId}`
+      )
+      .then((response) => {
+        setItem(response.data.item);
+        setDescription(response.data.description);
+        setQuantity(response.data.quantity);
+        setPrice(response.data.price);
+      });
+  }, []);
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -22,14 +35,16 @@ export default function CreateOrder() {
       event.preventDefault();
       event.stopPropagation();
     }
-    postData();
+    putData();
     setValidated(true);
   };
 
   let navigate = useNavigate();
-  const postData = () => {
+
+  const putData = () => {
     axios
-      .post(`https://localhost:5420/restaurants/${restaurantId}/orders`, {
+      .put(`https://localhost:5420/restaurants/${restaurantId}/orders`, {
+        id: orderId,
         item,
         description,
         quantity,
@@ -49,6 +64,7 @@ export default function CreateOrder() {
             required
             type="text"
             placeholder="Item"
+            value={item}
             onChange={(e) => setItem(e.target.value)}
           />
         </Form.Group>
@@ -58,6 +74,7 @@ export default function CreateOrder() {
             required
             type="text"
             placeholder="description"
+            value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
         </Form.Group>
@@ -67,6 +84,7 @@ export default function CreateOrder() {
             required
             type="number"
             placeholder="quantity"
+            value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
           />
         </Form.Group>
@@ -76,6 +94,7 @@ export default function CreateOrder() {
             required
             type="number"
             placeholder="price"
+            value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
         </Form.Group>

@@ -84,6 +84,13 @@ export default function DisplayRestaurant() {
 
       <div className="restaurant-orders mt-3 table-responsive">
         <h1>Orders</h1>
+        <Button
+          className="mb-3"
+          variant="primary"
+          onClick={() => navigate(`/restaurants/${id}/orders/create`)}
+        >
+          Create order
+        </Button>
         <Table responsive striped bordered hover variant="dark">
           <thead>
             <tr>

@@ -18,6 +18,8 @@ import LoginForm from './login/loginPage';
 import { setAuthToken } from './helpers/setAuthToken';
 import RegistrationForm from './register/registrationPage';
 import DisplayOrder from './order/displayOrder';
+import CreateOrder from './order/createOrder';
+import UpdateOrder from './order/updateOrder';
 
 function App() {
   //check jwt token
@@ -61,6 +63,20 @@ function App() {
                 exact
                 path="/restaurants/:restaurantId/orders/:orderId"
                 element={<DisplayOrder />}
+              />
+            </Route>
+            <Route element={<Guard token="token" routeRedirect="/login" />}>
+              <Route
+                exact
+                path="/restaurants/:restaurantId/orders/create"
+                element={<CreateOrder />}
+              />
+            </Route>
+            <Route element={<Guard token="token" routeRedirect="/login" />}>
+              <Route
+                exact
+                path="/restaurants/:restaurantId/orders/:orderId/update"
+                element={<UpdateOrder />}
               />
             </Route>
             <Route exact path="/login" element={<LoginForm />} />

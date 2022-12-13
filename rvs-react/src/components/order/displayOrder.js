@@ -18,7 +18,7 @@ export default function DisplayOrder() {
   const handleShowDelete = () => setShowDelete(true);
   const handleCloseDelete = () => setShowDelete(false);
   const handleDelete = () => {
-    axios.set
+    axios
       .delete(
         `https://localhost:5420/restaurants/${restaurantId}/orders/${orderId}`
       )
@@ -79,7 +79,7 @@ export default function DisplayOrder() {
           <Button
             variant="primary"
             onClick={() =>
-              navigate(`/restaurants/${restaurantId}/update/${orderId}`)
+              navigate(`/restaurants/${restaurantId}/orders/${orderId}/update`)
             }
           >
             Edit
