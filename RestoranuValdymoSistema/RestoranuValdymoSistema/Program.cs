@@ -179,7 +179,7 @@ async (IOrderRepository repo, Guid restaurantId, IMapper mapper) =>
     return Results.Ok(orderContracts);
 });
 
-app.MapGet("/restaurants/{restaurantId}/orders/{orderId}", [Authorize(Roles = "user, admin")]
+app.MapGet("/restaurants/{restaurantId}/orders/{orderId}", [Authorize(Roles = "user, admin, superadmin")]
 async (Guid orderId, Guid restaurantId, IOrderRepository repo, IMapper mapper) =>
 {
     var order = await repo.Get(restaurantId, orderId);
@@ -187,7 +187,7 @@ async (Guid orderId, Guid restaurantId, IOrderRepository repo, IMapper mapper) =
     return Results.Ok(orderContract);
 });
 
-app.MapPost("/restaurants/{restaurantId}/orders", [Authorize(Roles = "admin")] async (CreateOrderContract orderContract, Guid restaurantId, IOrderRepository repo, IMapper mapper) =>
+app.MapPost("/restaurants/{restaurantId}/orders", [Authorize(Roles = "admin, superadmin")] async (CreateOrderContract orderContract, Guid restaurantId, IOrderRepository repo, IMapper mapper) =>
 {
     var order = mapper.Map<Order>(orderContract);
     await repo.Create(restaurantId, order);
@@ -195,21 +195,21 @@ app.MapPost("/restaurants/{restaurantId}/orders", [Authorize(Roles = "admin")] a
     return Results.Created($"/restaurants/{restaurantId}/orders/{orderContractResult.Id}", orderContractResult);
 });
 
-app.MapPut("/restaurants/{restaurantId}/orders", [Authorize(Roles = "admin")] async (UpdateOrderContract orderContract, Guid restaurantId, IOrderRepository repo, IMapper mapper) =>
+app.MapPut("/restaurants/{restaurantId}/orders", [Authorize(Roles = "admin, superadmin")] async (UpdateOrderContract orderContract, Guid restaurantId, IOrderRepository repo, IMapper mapper) =>
 {
     var order = mapper.Map<Order>(orderContract);
     await repo.Update(restaurantId, order);
     return Results.NoContent();
 });
 
-app.MapDelete("/restaurants/{restaurantId}/orders/{orderId}", [Authorize(Roles = "admin")] async (Guid orderId, Guid restaurantId, IOrderRepository repo) =>
+app.MapDelete("/restaurants/{restaurantId}/orders/{orderId}", [Authorize(Roles = "admin, superadmin")] async (Guid orderId, Guid restaurantId, IOrderRepository repo) =>
 {
     await repo.Delete(restaurantId,orderId);
     return Results.NoContent();
 });
 
 // Notes
-app.MapGet("/restaurants/{restaurantId}/orders/{orderId}/notes", [Authorize(Roles = "user, admin")]
+app.MapGet("/restaurants/{restaurantId}/orders/{orderId}/notes", [Authorize(Roles = "user, admin, superadmin")]
 async (INoteRepository repo, Guid restaurantId, Guid orderId, IMapper mapper) =>
 {
     var notes = await repo.Get(restaurantId, orderId);
@@ -217,14 +217,14 @@ async (INoteRepository repo, Guid restaurantId, Guid orderId, IMapper mapper) =>
     return Results.Ok(noteContracts);
 });
 
-app.MapGet("/restaurants/{restaurantId}/orders/{orderId}/notes/{noteId}", [Authorize(Roles = "user, admin")] async (Guid noteId, Guid restaurantId, Guid orderId, INoteRepository repo, IMapper mapper) =>
+app.MapGet("/restaurants/{restaurantId}/orders/{orderId}/notes/{noteId}", [Authorize(Roles = "user, admin, superadmin")] async (Guid noteId, Guid restaurantId, Guid orderId, INoteRepository repo, IMapper mapper) =>
 {
     var note = await repo.Get(restaurantId, orderId, noteId);
     var noteContract = mapper.Map<NoteContract>(note);
     return Results.Ok(noteContract);
 });
 
-app.MapPost("/restaurants/{restaurantId}/orders/{orderId}/notes", [Authorize(Roles = "admin")] async (CreateNoteContract noteContract, Guid restaurantId, Guid orderId, INoteRepository repo, IMapper mapper) =>
+app.MapPost("/restaurants/{restaurantId}/orders/{orderId}/notes", [Authorize(Roles = "admin, superadmin")] async (CreateNoteContract noteContract, Guid restaurantId, Guid orderId, INoteRepository repo, IMapper mapper) =>
 {
     var note = mapper.Map<Note>(noteContract);
     await repo.Create(restaurantId, orderId, note);
@@ -232,14 +232,14 @@ app.MapPost("/restaurants/{restaurantId}/orders/{orderId}/notes", [Authorize(Rol
     return Results.Created($"/restaurants/{restaurantId}/orders/{orderId}/notes/{noteContractResult.Id}", noteContractResult);
 });
 
-app.MapPut("/restaurants/{restaurantId}/orders/{orderId}/notes", [Authorize(Roles = "admin")] async (UpdateNoteContract noteContract, Guid restaurantId, Guid orderId, INoteRepository repo, IMapper mapper) =>
+app.MapPut("/restaurants/{restaurantId}/orders/{orderId}/notes", [Authorize(Roles = "admin, superadmin")] async (UpdateNoteContract noteContract, Guid restaurantId, Guid orderId, INoteRepository repo, IMapper mapper) =>
 {
     var note = mapper.Map<Note>(noteContract);
     await repo.Update(restaurantId, orderId, note);
     return Results.NoContent();
 });
 
-app.MapDelete("/restaurants/{restaurantId}/orders/{orderId}/notes/{noteId}", [Authorize(Roles = "admin")] async (Guid noteId, Guid restaurantId, Guid orderId, INoteRepository repo) =>
+app.MapDelete("/restaurants/{restaurantId}/orders/{orderId}/notes/{noteId}", [Authorize(Roles = "admin, superadmin")] async (Guid noteId, Guid restaurantId, Guid orderId, INoteRepository repo) =>
 {
     await repo.Delete(restaurantId, orderId, noteId);
     return Results.NoContent();
