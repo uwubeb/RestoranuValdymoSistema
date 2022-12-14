@@ -108,6 +108,9 @@ function App() {
           </Routes>
         </div>
       </div>
+      <div className="footer">
+        <p>© 2022 Arūnas Zamalis</p>
+      </div>
     </Router>
   );
 }
