@@ -23,6 +23,8 @@ import UpdateOrder from './order/updateOrder';
 import DisplayNote from './note/displayNote';
 import CreateNote from './note/createNote';
 import UpdateNote from './note/updateNote';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Footer from './footer/footer';
 
 function App() {
   //check jwt token
@@ -106,10 +108,8 @@ function App() {
             <Route exact path="/login" element={<LoginForm />} />
             <Route exact path="/register" element={<RegistrationForm />} />
           </Routes>
+          <Footer />
         </div>
-      </div>
-      <div className="footer">
-        <p>© 2022 Arūnas Zamalis</p>
       </div>
     </Router>
   );
