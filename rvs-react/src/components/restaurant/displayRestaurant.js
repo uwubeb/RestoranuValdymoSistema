@@ -3,16 +3,16 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { Container, Table, Row } from 'react-bootstrap';
+import { Container, Table, Row, Spinner } from 'react-bootstrap';
 import '../style/App.css';
 
 export default function DisplayRestaurant() {
   const [restaurant, setRestaurant] = useState({});
   const [orders, setOrders] = useState([]);
   const [showDelete, setShowDelete] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const { id } = useParams();
-
   const navigate = useNavigate();
 
   const handleShowDelete = () => setShowDelete(true);
@@ -35,6 +35,7 @@ export default function DisplayRestaurant() {
       .get(`https://localhost:5420/restaurants/${id}/orders`)
       .then((response) => {
         setOrders(response.data);
+        setLoading(false);
       });
   };
   useEffect(() => {
@@ -84,6 +85,9 @@ export default function DisplayRestaurant() {
 
       <div className="restaurant-orders mt-3 table-responsive">
         <h1>Orders</h1>
+        <Spinner animation="border" role="status" hidden={!loading}>
+          <span className="sr-only loader">Loading...</span>
+        </Spinner>
         <Button
           className="mb-3"
           variant="primary"
