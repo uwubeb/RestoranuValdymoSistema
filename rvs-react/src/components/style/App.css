@@ -18,6 +18,9 @@ body {
   background-color: darkseagreen;
   color: black;
   font-family: 'Mukta', sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 .restaurant-details {
@@ -50,20 +53,20 @@ body {
 }
 
 .footer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  place-items: center;
-  align-items: center;
-  left: 0;
-  bottom: 0;
-  width: 100%;
+  text-align: center;
+  margin-top: auto;
+  padding: 8px;
   background-color: gray;
   color: white;
-  text-align: center;
   font-family: 'Mukta', sans-serif;
 }
 svg {
   fill: black;
   float: left;
+}
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }

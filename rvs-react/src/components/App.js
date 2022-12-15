@@ -34,7 +34,7 @@ function App() {
   }
   return (
     <Router>
-      <div>
+      <div className="wrapper">
         <RVSNavbar></RVSNavbar>
         <div>
           <Routes history={history}>
@@ -108,8 +108,8 @@ function App() {
             <Route exact path="/login" element={<LoginForm />} />
             <Route exact path="/register" element={<RegistrationForm />} />
           </Routes>
-          <Footer />
         </div>
+        <Footer />
       </div>
     </Router>
   );
