@@ -39,6 +39,8 @@ http://20.91.161.241/swagger/index.html
 * /login, /register pasiekiami visų - user/admin/svečias
 * Autorizacija naudoja JWT, tokene kaip claim yra pridėta rolė. Bearer token gaunamas per /login endpointą
 
+API docs:
+https://old-puma-56.redoc.ly/
 Wireframes:
 
 Restaurants list:
