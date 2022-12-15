@@ -114,7 +114,7 @@ app.UseMiddleware<ErrorHandlerMiddleware>();
 
 
 // Restaurants
-app.MapGet("/restaurants", [AllowAnonymous] async (IRestaurantRepository repo, IMapper mapper, IHttpContextAccessor context) =>
+app.MapGet("/restaurants", [Authorize(Roles = "user, admin, superadmin")] async (IRestaurantRepository repo, IMapper mapper, IHttpContextAccessor context) =>
 {
     var userClaims = context.HttpContext.User.Claims;
     //var userClaims = new List<Claim> { new Claim(ClaimTypes.Role, "superadmin") };

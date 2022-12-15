@@ -13,8 +13,19 @@
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
-        }
+        },
+        "security": [
+          {
+            "oauth2": [ ]
+          }
+        ]
       },
       "post": {
         "tags": [

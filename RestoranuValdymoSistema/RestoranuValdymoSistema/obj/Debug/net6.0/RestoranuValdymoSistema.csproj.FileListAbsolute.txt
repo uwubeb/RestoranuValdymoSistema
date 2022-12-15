@@ -105,3 +105,4 @@ C:\Users\Arunas\source\repos\RestoranuValdymoSistema\RestoranuValdymoSistema\Res
 C:\Users\Arunas\source\repos\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\obj\Debug\net6.0\RestoranuValdymoSistema.pdb
 C:\Users\Arunas\source\repos\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\obj\Debug\net6.0\RestoranuValdymoSistema.genruntimeconfig.cache
 C:\Users\Arunas\source\repos\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\obj\Debug\net6.0\ref\RestoranuValdymoSistema.dll
+C:\Users\Arunas\source\repos\RestoranuValdymoSistema\RestoranuValdymoSistema\RestoranuValdymoSistema\bin\Debug\net6.0\swagger.json
