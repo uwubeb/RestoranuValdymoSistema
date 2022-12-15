@@ -7,6 +7,8 @@
   "paths": {
     "/restaurants": {
       "get": {
+        "summary": "Get all restaurants",
+        "description": "Allowed roles: user+",
         "tags": [
           "RestoranuValdymoSistema"
         ],
@@ -23,7 +25,7 @@
         },
         "security": [
           {
-            "oauth2": [ ]
+            "oauth2": []
           }
         ]
       },
@@ -31,6 +33,8 @@
         "tags": [
           "RestoranuValdymoSistema"
         ],
+        "summary": "Create a restaurant",
+        "description": "Allowed roles: admin+",
         "requestBody": {
           "content": {
             "application/json": {
@@ -62,6 +66,8 @@
         "tags": [
           "RestoranuValdymoSistema"
         ],
+        "summary": "Update a restaurant",
+        "description": "Allowed roles: admin+",
         "requestBody": {
           "content": {
             "application/json": {
@@ -95,6 +101,8 @@
         "tags": [
           "RestoranuValdymoSistema"
         ],
+        "summary": "Get all restaurants to display a list",
+        "description": "Allowed roles: guest+",
         "responses": {
           "200": {
             "description": "Success"
@@ -107,6 +115,8 @@
         "tags": [
           "RestoranuValdymoSistema"
         ],
+        "summary": "Get a restaurant by id",
+        "description": "Allowed roles: user+",
         "parameters": [
           {
             "name": "id",
@@ -138,6 +148,8 @@
         "tags": [
           "RestoranuValdymoSistema"
         ],
+        "summary": "Delete a restaurant by id",
+        "description": "Allowed roles: admin+",
         "parameters": [
           {
             "name": "id",
@@ -171,6 +183,8 @@
         "tags": [
           "RestoranuValdymoSistema"
         ],
+        "summary": "Get all orders for a restaurant",
+        "description": "Allowed roles: user+",
         "parameters": [
           {
             "name": "restaurantId",
@@ -202,6 +216,8 @@
         "tags": [
           "RestoranuValdymoSistema"
         ],
+        "summary": "Create an order for a restaurant",
+        "description": "Allowed roles: admin+",
         "parameters": [
           {
             "name": "restaurantId",
@@ -243,6 +259,8 @@
         "tags": [
           "RestoranuValdymoSistema"
         ],
+        "summary": "Update an order for a restaurant",
+        "description": "Allowed roles: admin+",
         "parameters": [
           {
             "name": "restaurantId",
@@ -286,6 +304,8 @@
         "tags": [
           "RestoranuValdymoSistema"
         ],
+        "summary": "Get an order for a restaurant by id",
+        "description": "Allowed roles: user+",
         "parameters": [
           {
             "name": "orderId",
@@ -325,6 +345,8 @@
         "tags": [
           "RestoranuValdymoSistema"
         ],
+        "summary": "Delete an order for a restaurant by id",
+        "description": "Allowed roles: admin+",
         "parameters": [
           {
             "name": "orderId",
@@ -366,6 +388,8 @@
         "tags": [
           "RestoranuValdymoSistema"
         ],
+        "summary": "Get all notes for an order for a restaurant",
+        "description": "Allowed roles: user+",
         "parameters": [
           {
             "name": "restaurantId",
@@ -405,6 +429,8 @@
         "tags": [
           "RestoranuValdymoSistema"
         ],
+        "summary": "Create a note for an order for a restaurant",
+        "description": "Allowed roles: admin+",
         "parameters": [
           {
             "name": "restaurantId",
@@ -454,6 +480,8 @@
         "tags": [
           "RestoranuValdymoSistema"
         ],
+        "summary": "Update a note for an order for a restaurant",
+        "description": "Allowed roles: admin+",
         "parameters": [
           {
             "name": "restaurantId",
@@ -505,6 +533,8 @@
         "tags": [
           "RestoranuValdymoSistema"
         ],
+        "summary": "Get a note for an order for a restaurant by id",
+        "description": "Allowed roles: user+",
         "parameters": [
           {
             "name": "noteId",
@@ -552,6 +582,8 @@
         "tags": [
           "RestoranuValdymoSistema"
         ],
+        "summary": "Delete a note for an order for a restaurant by id",
+        "description": "Allowed roles: admin+",
         "parameters": [
           {
             "name": "noteId",
@@ -601,6 +633,8 @@
         "tags": [
           "RestoranuValdymoSistema"
         ],
+        "summary": "Register a new user",
+        "description": "Allowed roles: guest+",
         "requestBody": {
           "content": {
             "application/json": {
@@ -623,6 +657,8 @@
         "tags": [
           "RestoranuValdymoSistema"
         ],
+        "summary": "Get all users",
+        "description": "Allowed roles: admin+",
         "responses": {
           "200": {
             "description": "Success"
@@ -646,6 +682,8 @@
         "tags": [
           "RestoranuValdymoSistema"
         ],
+        "summary": "Login",
+        "description": "Allowed roles: guest+",
         "requestBody": {
           "content": {
             "application/json": {
