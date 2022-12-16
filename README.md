@@ -38,3 +38,19 @@ http://20.91.161.241/swagger/index.html
 * GET endpointai pasiekiami turint user arba admin rolę.
 * /login, /register pasiekiami visų - user/admin/svečias
 * Autorizacija naudoja JWT, tokene kaip claim yra pridėta rolė. Bearer token gaunamas per /login endpointą
+
+API docs:
+https://old-puma-56.redoc.ly/
+Wireframes:
+
+Restaurants list:
+<img width="1279" alt="image" src="https://user-images.githubusercontent.com/8914148/207929840-c6ba3a88-cb42-4796-b399-d767ab50faba.png">
+
+Detailed view:
+<img width="1142" alt="image" src="https://user-images.githubusercontent.com/8914148/207930018-0212c47a-9908-4b82-bc90-a6d60b3714cf.png">
+
+Create form:
+<img width="269" alt="image" src="https://user-images.githubusercontent.com/8914148/207930104-0f7c30f7-66ab-4967-a8a4-56672c41a534.png">
+
+Registration form:
+<img width="464" alt="image" src="https://user-images.githubusercontent.com/8914148/207930167-0d9d74a5-eec7-4a2b-9e5f-6c8535092fa3.png">
