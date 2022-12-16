@@ -19,20 +19,28 @@ export default function DisplayRestaurant() {
   const handleCloseDelete = () => setShowDelete(false);
   const handleDelete = () => {
     axios
-      .delete(`https://localhost:5420/restaurants/${id}`)
+      .delete(
+        `https://restoranuvaldymosistema20221216125610.azurewebsites.net/restaurants/${id}`
+      )
       .then((response) => {
         navigate('/restaurants');
       });
   };
   const getRestaurant = (id) => {
-    axios.get(`https://localhost:5420/restaurants/${id}`).then((response) => {
-      setRestaurant(response.data);
-    });
+    axios
+      .get(
+        `https://restoranuvaldymosistema20221216125610.azurewebsites.net/restaurants/${id}`
+      )
+      .then((response) => {
+        setRestaurant(response.data);
+      });
   };
 
   const getOrders = (id) => {
     axios
-      .get(`https://localhost:5420/restaurants/${id}/orders`)
+      .get(
+        `https://restoranuvaldymosistema20221216125610.azurewebsites.net/restaurants/${id}/orders`
+      )
       .then((response) => {
         setOrders(response.data);
         setLoading(false);

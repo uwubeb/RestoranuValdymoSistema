@@ -16,7 +16,7 @@ export default function UpdateNote() {
   useEffect(() => {
     axios
       .get(
-        `https://localhost:5420/restaurants/${restaurantId}/orders/${orderId}/notes/${noteId}`
+        `https://restoranuvaldymosistema20221216125610.azurewebsites.net//restaurants/${restaurantId}/orders/${orderId}/notes/${noteId}`
       )
       .then((response) => {
         setText(response.data.text);
@@ -38,7 +38,7 @@ export default function UpdateNote() {
   const putData = () => {
     console.log('put');
     axios.put(
-      `https://localhost:5420/restaurants/${restaurantId}/orders/${orderId}/notes`,
+      `https://restoranuvaldymosistema20221216125610.azurewebsites.net/restaurants/${restaurantId}/orders/${orderId}/notes`,
       {
         id: noteId,
         text,

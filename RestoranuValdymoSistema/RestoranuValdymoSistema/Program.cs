@@ -107,7 +107,7 @@ if (corsOrigins.Any())
 }
 
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<ErrorHandlerMiddleware>();

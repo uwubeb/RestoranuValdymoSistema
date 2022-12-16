@@ -9,18 +9,28 @@ export default function ListRestaurants() {
   const [restaurants, setRestaurants] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    axios.get(`https://localhost:5420/restaurants`).then((response) => {
-      setRestaurants(response.data);
-    });
+    axios
+      .get(
+        `https://restoranuvaldymosistema20221216125610.azurewebsites.net/restaurants`
+      )
+      .then((response) => {
+        setRestaurants(response.data);
+      });
   }, []);
   const getData = () => {
-    axios.get(`https://localhost:5420/restaurants`).then((response) => {
-      setRestaurants(response.data);
-    });
+    axios
+      .get(
+        `https://restoranuvaldymosistema20221216125610.azurewebsites.net/restaurants`
+      )
+      .then((response) => {
+        setRestaurants(response.data);
+      });
   };
   const deleteRestaurant = (id) => {
     axios
-      .delete(`https://localhost:5420/restaurants/${id}`)
+      .delete(
+        `https://restoranuvaldymosistema20221216125610.azurewebsites.net/restaurants/${id}`
+      )
       .then((response) => {
         getData();
       });

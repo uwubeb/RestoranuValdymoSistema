@@ -27,7 +27,7 @@ export default function CreateNote() {
 
   const postData = () => {
     axios.post(
-      `https://localhost:5420/restaurants/${restaurantId}/orders/${orderId}/notes`,
+      `https://restoranuvaldymosistema20221216125610.azurewebsites.net/restaurants/${restaurantId}/orders/${orderId}/notes`,
       {
         text,
       }

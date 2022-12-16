@@ -27,22 +27,29 @@ export default function UpdateRestaurant() {
   let navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`https://localhost:5420/restaurants/${id}`).then((response) => {
-      setName(response.data.name);
-      setAddress(response.data.address);
-      setPhoneNumber(response.data.phoneNumber);
-      setEmail(response.data.email);
-    });
+    axios
+      .get(
+        `https://restoranuvaldymosistema20221216125610.azurewebsites.net/restaurants/${id}`
+      )
+      .then((response) => {
+        setName(response.data.name);
+        setAddress(response.data.address);
+        setPhoneNumber(response.data.phoneNumber);
+        setEmail(response.data.email);
+      });
   }, [id]);
 
   const postData = () => {
-    axios.put(`https://localhost:5420/restaurants`, {
-      id,
-      name,
-      address,
-      phoneNumber,
-      email,
-    });
+    axios.put(
+      `https://restoranuvaldymosistema20221216125610.azurewebsites.net/restaurants`,
+      {
+        id,
+        name,
+        address,
+        phoneNumber,
+        email,
+      }
+    );
     navigate('/restaurants');
   };
 

@@ -19,7 +19,7 @@ export default function UpdateOrder() {
   useEffect(() => {
     axios
       .get(
-        `https://localhost:5420/restaurants/${restaurantId}/orders/${orderId}`
+        `https://restoranuvaldymosistema20221216125610.azurewebsites.net/restaurants/${restaurantId}/orders/${orderId}`
       )
       .then((response) => {
         setItem(response.data.item);
@@ -43,13 +43,16 @@ export default function UpdateOrder() {
 
   const putData = () => {
     console.log('put');
-    axios.put(`https://localhost:5420/restaurants/${restaurantId}/orders`, {
-      id: orderId,
-      item,
-      description,
-      quantity,
-      price,
-    });
+    axios.put(
+      `https://restoranuvaldymosistema20221216125610.azurewebsites.net/restaurants/${restaurantId}/orders`,
+      {
+        id: orderId,
+        item,
+        description,
+        quantity,
+        price,
+      }
+    );
     console.log(restaurantId);
     navigate(`/restaurants/${restaurantId}`);
   };

@@ -30,12 +30,15 @@ export default function CreateOrder() {
 
   const postData = () => {
     axios
-      .post(`https://localhost:5420/restaurants/${restaurantId}/orders`, {
-        item,
-        description,
-        quantity,
-        price,
-      })
+      .post(
+        `https://restoranuvaldymosistema20221216125610.azurewebsites.net/restaurants/${restaurantId}/orders`,
+        {
+          item,
+          description,
+          quantity,
+          price,
+        }
+      )
       .then((response) => {
         navigate(`/restaurants/${restaurantId}`);
       });

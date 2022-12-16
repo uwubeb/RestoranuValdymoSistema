@@ -21,7 +21,7 @@ export default function DisplayNote() {
   const handleDelete = () => {
     axios
       .delete(
-        `https://localhost:5420/restaurants/${restaurantId}/orders/${orderId}/notes/${noteId}`
+        `https://restoranuvaldymosistema20221216125610.azurewebsites.net/restaurants/${restaurantId}/orders/${orderId}/notes/${noteId}`
       )
       .then((response) => {
         navigate('/restaurants');
@@ -30,7 +30,7 @@ export default function DisplayNote() {
   const getNote = (restaurantId, orderId, noteId) => {
     axios
       .get(
-        `https://localhost:5420/restaurants/${restaurantId}/orders/${orderId}/notes/${noteId}`
+        `https://restoranuvaldymosistema20221216125610.azurewebsites.net/restaurants/${restaurantId}/orders/${orderId}/notes/${noteId}`
       )
       .then((response) => {
         setNote(response.data);

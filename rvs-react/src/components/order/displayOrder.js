@@ -21,7 +21,7 @@ export default function DisplayOrder() {
   const handleDelete = () => {
     axios
       .delete(
-        `https://localhost:5420/restaurants/${restaurantId}/orders/${orderId}`
+        `https://restoranuvaldymosistema20221216125610.azurewebsites.net//restaurants/${restaurantId}/orders/${orderId}`
       )
       .then((response) => {
         navigate('/restaurants');
@@ -30,7 +30,7 @@ export default function DisplayOrder() {
   const getOrder = (restaurantId, orderId) => {
     axios
       .get(
-        `https://localhost:5420/restaurants/${restaurantId}/orders/${orderId}`
+        `https://restoranuvaldymosistema20221216125610.azurewebsites.net/restaurants/${restaurantId}/orders/${orderId}`
       )
       .then((response) => {
         setOrder(response.data);
@@ -40,7 +40,7 @@ export default function DisplayOrder() {
   const getNotes = (restaurantId, orderId) => {
     axios
       .get(
-        `https://localhost:5420/restaurants/${restaurantId}/orders/${orderId}/notes`
+        `https://restoranuvaldymosistema20221216125610.azurewebsites.net/restaurants/${restaurantId}/orders/${orderId}/notes`
       )
       .then((response) => {
         setNotes(response.data);

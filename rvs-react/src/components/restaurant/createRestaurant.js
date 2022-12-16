@@ -27,12 +27,15 @@ export default function CreateRestaurant() {
   let navigate = useNavigate();
   const postData = () => {
     axios
-      .post(`https://localhost:5420/restaurants`, {
-        name,
-        address,
-        phoneNumber,
-        email,
-      })
+      .post(
+        `https://restoranuvaldymosistema20221216125610.azurewebsites.net/restaurants`,
+        {
+          name,
+          address,
+          phoneNumber,
+          email,
+        }
+      )
       .then((response) => {
         navigate('/restaurants');
       });

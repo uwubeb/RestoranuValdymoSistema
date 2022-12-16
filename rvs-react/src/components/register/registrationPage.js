@@ -9,7 +9,9 @@ function RegistrationForm() {
   useEffect(() => {
     // Use the fetch API to get the items from the API endpoint
     setIsLoading(true);
-    fetch('https://localhost:5420/restaurantList')
+    fetch(
+      'https://restoranuvaldymosistema20221216125610.azurewebsites.net/restaurantList'
+    )
       .then((response) => response.json())
       .then((data) => {
         setItems(data);
@@ -56,7 +58,10 @@ function RegistrationForm() {
     };
 
     axios
-      .post('https://localhost:5420/register', registerRequest)
+      .post(
+        'https://restoranuvaldymosistema20221216125610.azurewebsites.net/register',
+        registerRequest
+      )
       .then((response) => {
         //redirect user to home page
         window.location.href = '/login';

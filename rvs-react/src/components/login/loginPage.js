@@ -16,7 +16,10 @@ function LoginForm() {
     };
 
     axios
-      .post('https://localhost:5420/login', loginPayload)
+      .post(
+        'https://restoranuvaldymosistema20221216125610.azurewebsites.net/login',
+        loginPayload
+      )
       .then((response) => {
         //get token from response
         const token = response.data;
