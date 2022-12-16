@@ -32,7 +32,7 @@ Prisiregistravęs, kompanijos vadovas, galės:
 5. Matyti frančižės veiklos apibendrinimą
 
 ## URL
-https://comfy-stardust-3e18e9.netlify.app/login
+https://restoranu-valdymo-sistema.vercel.app/login
 
 ## Naudojimas
 
