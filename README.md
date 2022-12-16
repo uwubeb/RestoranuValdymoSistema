@@ -31,8 +31,10 @@ Prisiregistravęs, kompanijos vadovas, galės:
   4.2 *Palikti pastabas*
 5. Matyti frančižės veiklos apibendrinimą
 
+## URL
+https://comfy-stardust-3e18e9.netlify.app/login
+
 ## Naudojimas
-http://20.91.161.241/swagger/index.html
 
 * CREATE/PUT/DELETE endpointai pasiekiami tik turint admin rolę.
 * GET endpointai pasiekiami turint user arba admin rolę.
