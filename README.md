@@ -31,6 +31,10 @@ Prisiregistravęs, kompanijos vadovas, galės:
   4.2 *Palikti pastabas*
 5. Matyti frančižės veiklos apibendrinimą
 
+## Deployment diagram
+
+![untitled (1)](https://user-images.githubusercontent.com/8914148/209104838-8f30cba2-b8ba-4ba1-b832-1fa55e1e64d7.png)
+
 ## URL
 https://restoranu-valdymo-sistema.vercel.app/login
 
